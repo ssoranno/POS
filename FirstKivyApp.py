@@ -13,10 +13,10 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 Builder.load_string("""
 <B@Button>:
     font_size: 32
-    color: 0, 0, 0, 1
+    color: 1, 1, 1, 1
     size: 150, 50
     size_hint: .7, .15
-    background_color: .88, .88, .88, 1
+    background_color: 0.88, 0.88, 0.88, 1
 <Welcome>:
     FloatLayout:
         B:
@@ -77,6 +77,7 @@ Builder.load_string("""
                 root.ids["LoggedIn"].text = ""
                 root.ids["login"].text = ""
                 root.ids["passw"].text = ""
+                root.manager.transition.direction = 'right'
         B:
             text: "Submit"
             pos_hint: {"center_x": 0.5, "center_y":0.25}
@@ -86,7 +87,9 @@ Builder.load_string("""
     B:
         text: "Back"
         pos_hint: {"center_x": 0.5, "center_y":0.5}
-        on_press: root.manager.current = "welcome"
+        on_press: 
+            root.manager.current = "welcome"
+            root.manager.transition.direction = 'right'
 
 <Call>:
     B:
@@ -95,8 +98,9 @@ Builder.load_string("""
     B:
         text: "Back"
         pos_hint: {"center_x": 0.5, "center_y":0.45}
-        on_press: root.manager.current = "welcome"
-
+        on_press: 
+            root.manager.current = "welcome"
+            root.manager.transition.direction = 'right'
 """)
 
 
