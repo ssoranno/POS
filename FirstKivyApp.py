@@ -2,7 +2,7 @@
 # Shows Front End Functionality
 
 import kivy
-kivy.require('1.9.0')
+#kivy.require('1.9.0')
 
 from kivy.app import App
 #from kivy.uix.floatlayout import FloatLayout
@@ -126,7 +126,7 @@ screen_manager.add_widget(Call(name='call'))
 
 class HelloKivy(App):
     def build(self):
-        Window.clearcolor = (0,0,1,1)
+        Window.clearcolor = (0,0,.5,1)
         return screen_manager
         #return Label()
         #return Button(text="press me")
