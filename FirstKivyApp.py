@@ -4,6 +4,7 @@
 import kivy
 #kivy.require('1.9.0')
 import requests
+import json
 
 from kivy.app import App
 #from kivy.uix.floatlayout import FloatLayout
@@ -85,12 +86,36 @@ Builder.load_string("""
             on_press: root.verify_credentials()
 
 <Register>:
-    B:
-        text: "Back"
-        pos_hint: {"center_x": 0.5, "center_y":0.5}
-        on_press: 
-            root.manager.current = "welcome"
-            root.manager.transition.direction = 'right'
+    FloatLayout:
+        Label:
+            text: "Username:"
+            font_size: 25
+            pos_hint: {"center_x": 0.5, "center_y":0.8}
+        TextInput:
+            font_size: 32
+            size_hint: .5, .1
+            pos_hint: {"center_x": 0.5, "center_y":0.65}
+            id: login
+        Label:
+            text: "Password:"
+            font_size: 25
+            pos_hint: {"center_x": 0.5, "center_y":0.55}
+        TextInput:
+            password: True
+            font_size: 32
+            size_hint: .5, .1
+            pos_hint: {"center_x": 0.5, "center_y":0.45}
+            id: passw
+        B:
+            text: "Create Account"
+            pos_hint: {"center_x": 0.5, "center_y":0.3}
+            on_press: root.create_new_account()
+        B:
+            text: "Back"
+            pos_hint: {"center_x": 0.5, "center_y":0.1}
+            on_press: 
+                root.manager.current = "welcome"
+                root.manager.transition.direction = 'right'
 
 <Call>:
     B:
@@ -109,7 +134,7 @@ class Welcome(Screen):
     pass
 class Login(Screen):
     def verify_credentials(self):
-        url = "https://posdemo-68bbd.firebaseio.com/usernames/"+self.ids["login"].text+".json"
+        url = "https://posdemo-68bbd.firebaseio.com/username/"+self.ids["login"].text+".json"
         source = requests.get(url)
         print(source.text)
         if(source.text == "null"):
@@ -118,12 +143,25 @@ class Login(Screen):
         else:
             password = source.text.replace("\"", "")
             if password == self.ids["passw"].text:
-                self.ids["LoggedIn"].text = "Logged In"
+                #self.ids["LoggedIn"].text = "Logged In"
+                self.ids["login"].text = ""
+                self.ids["passw"].text = ""
+                self.manager.current = "welcome"
             else:
                 self.ids["LoggedIn"].text = "Incorrect Password"
 
 class Register(Screen):
-    pass
+    def create_new_account(self):
+        username = str(self.ids["login"].text)
+        password = str(self.ids["passw"].text)
+        payload = {username:password}
+        print(json.dumps(payload))
+        r = requests.patch("https://posdemo-68bbd.firebaseio.com/username.json", data=json.dumps(payload))
+        print(r.content)
+        self.ids["login"].text = ""
+        self.ids["passw"].text = ""
+        
+
 
 class Call(Screen):
     pass
