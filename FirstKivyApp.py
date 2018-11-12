@@ -3,6 +3,7 @@
 
 import kivy
 #kivy.require('1.9.0')
+import requests
 
 from kivy.app import App
 #from kivy.uix.floatlayout import FloatLayout
@@ -108,8 +109,18 @@ class Welcome(Screen):
     pass
 class Login(Screen):
     def verify_credentials(self):
-        if self.ids["login"].text == "username" and self.ids["passw"].text == "password":
-            self.ids["LoggedIn"].text = "Logged In"
+        url = "https://posdemo-68bbd.firebaseio.com/usernames/"+self.ids["login"].text+".json"
+        source = requests.get(url)
+        print(source.text)
+        if(source.text == "null"):
+            print("error incorrect username")
+            self.ids["LoggedIn"].text = "Incorrect Username"
+        else:
+            password = source.text.replace("\"", "")
+            if password == self.ids["passw"].text:
+                self.ids["LoggedIn"].text = "Logged In"
+            else:
+                self.ids["LoggedIn"].text = "Incorrect Password"
 
 class Register(Screen):
     pass
