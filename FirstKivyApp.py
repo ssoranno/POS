@@ -19,6 +19,12 @@ Builder.load_string("""
     size: 150, 50
     size_hint: .7, .15
     background_color: 0.88, 0.88, 0.88, 1
+<B2@Button>:
+    font_size: 32
+    color: 1, 1, 1, 1
+    size: 25, 25
+    size_hint: .15, .15
+    background_color: 0.88, 0.88, 0.88, 1
 <Welcome>:
     FloatLayout:
         B:
@@ -84,6 +90,38 @@ Builder.load_string("""
             text: "Submit"
             pos_hint: {"center_x": 0.5, "center_y":0.25}
             on_press: root.verify_credentials()
+<MainMenu>:
+    FloatLayout:
+        B:
+            text: "Take Order"
+            pos_hint: {"center_x": 0.5, "center_y":0.7}
+            on_press: root.manager.current = "tableview"
+        B:
+            text: "Process Transaction"
+            pos_hint: {"center_x": 0.5, "center_y":0.5}
+        B:
+            text: "Logout"
+            pos_hint: {"center_x": 0.5, "center_y":0.3}
+            on_press: root.manager.current = "welcome"
+
+<TableView>:
+    FloatLayout:
+        B2:
+            text: "Table 1"
+            pos_hint: {"center_x": 0.2, "center_y":0.8}
+        B2:
+            text: "Table 2"
+            pos_hint: {"center_x": 0.4, "center_y":0.8}
+        B2:
+            text: "Table 3"
+            pos_hint: {"center_x": 0.6, "center_y":0.8}
+        B2:
+            text: "Table 4"
+            pos_hint: {"center_x": 0.8, "center_y":0.8}
+        B2:
+            text: "Table 5"
+            pos_hint: {"center_x": 0.2, "center_y":0.6}
+            
 
 <Register>:
     FloatLayout:
@@ -146,7 +184,7 @@ class Login(Screen):
                 #self.ids["LoggedIn"].text = "Logged In"
                 self.ids["login"].text = ""
                 self.ids["passw"].text = ""
-                self.manager.current = "welcome"
+                self.manager.current = "mainmenu"
             else:
                 self.ids["LoggedIn"].text = "Incorrect Password"
 
@@ -166,12 +204,19 @@ class Register(Screen):
 class Call(Screen):
     pass
 
+class MainMenu(Screen):
+    pass
+class TableView(Screen):
+    pass
+
 screen_manager = ScreenManager()
 
 screen_manager.add_widget(Welcome(name='welcome'))
 screen_manager.add_widget(Login(name='login'))
 screen_manager.add_widget(Register(name='register'))
 screen_manager.add_widget(Call(name='call'))
+screen_manager.add_widget(MainMenu(name='mainmenu'))
+screen_manager.add_widget(TableView(name='tableview'))
 
 class HelloKivy(App):
     def build(self):
