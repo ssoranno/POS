@@ -121,6 +121,9 @@ Builder.load_string("""
         B2:
             text: "Table 5"
             pos_hint: {"center_x": 0.2, "center_y":0.6}
+        B2:
+            text: "Table 6"
+            pos_hint: {"center_x": 0.4, "center_y":0.6}
             
 
 <Register>:
