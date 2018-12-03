@@ -3,16 +3,19 @@
 
 import kivy
 #kivy.require('1.9.0')
-import requests
-import json
+#import requests
+#import json
 
 from kivy.app import App
 #from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
+from kivy.network.urlrequest import UrlRequest
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.textinput import TextInput
+from  kivy.uix.label import Label
 
 Builder.load_string("""
 <B@Button>:
@@ -26,6 +29,13 @@ Builder.load_string("""
     color: 1, 1, 1, 1
     size: 25, 25
     size_hint: .15, .15
+    background_color: 0.88, 0.88, 0.88, 1
+<submitB@Button>:
+    text: "Submit"
+    font_size: 32
+    color: 1, 1, 1, 1
+    size: 25, 25
+    size_hint: .15, .10
     background_color: 0.88, 0.88, 0.88, 1
 <Welcome>:
     FloatLayout:
@@ -91,7 +101,7 @@ Builder.load_string("""
         B:
             text: "Submit"
             pos_hint: {"center_x": 0.5, "center_y":0.25}
-            on_press: root.manager.current = "mainmenu"
+            on_press: root.verify_credentials()
 <MainMenu>:
     FloatLayout:
         B:
@@ -109,15 +119,21 @@ Builder.load_string("""
             on_press: root.manager.current = "welcome"
 
 <OrderScreen>:
-    on_pre_enter: root.getFood()
     FloatLayout:
-
+        TextInput:
+            size_hint: .5, .1 
+            pos_hint: {"center_x": 0.4, "center_y":0.9}
+            font_size: 32
+            id: searchBox
+        submitB:
+            pos_hint: {"center_x": 0.8, "center_y":0.9}
+            on_press: root.getFood()
         B:
             text: "Back"
             pos_hint: {"center_x": 0.5, "center_y":0.2}
             on_press: 
-                root.manager.current = "mainmenu"
-                root.manager.transition.direction = 'right' 
+                root.manager.current = "tableview"
+                root.manager.transition.direction = 'left' 
 
 <TableView>:
     FloatLayout:
@@ -128,18 +144,15 @@ Builder.load_string("""
         B2:
             text: "Table 2"
             pos_hint: {"center_x": 0.4, "center_y":0.8}
+            on_press: root.manager.current = "oscreen"
         B2:
             text: "Table 3"
             pos_hint: {"center_x": 0.6, "center_y":0.8}
+            on_press: root.manager.current = "oscreen"
         B2:
             text: "Table 4"
             pos_hint: {"center_x": 0.8, "center_y":0.8}
-        B2:
-            text: "Table 5"
-            pos_hint: {"center_x": 0.2, "center_y":0.6}
-        B2:
-            text: "Table 6"
-            pos_hint: {"center_x": 0.4, "center_y":0.6}
+            on_press: root.manager.current = "oscreen"
         B:
             text: "Back"
             pos_hint: {"center_x": 0.5, "center_y":0.2}
@@ -194,12 +207,36 @@ Builder.load_string("""
 
 class Welcome(Screen):
     pass
+
+
+'''def authenticate(source,results):
+    password = results
+    print("auth:")
+    print(password)'''
+
 class Login(Screen):
+
+    #def getInfo(source,results):
+    #    print(results)
+    
     def verify_credentials(self):
         url = "https://posdemo-68bbd.firebaseio.com/username/"+self.ids["login"].text+".json"
-        source = requests.get(url)
-        print(source.text)
-        if(source.text == "null"):
+        def authenticate(source,results):
+            print(results)
+            if(results == None):
+                print("error incorrect username")
+                self.ids["LoggedIn"].text = "Incorrect Username"
+            else:
+                #password = source.text.replace("\"", "")
+                if results == self.ids["passw"].text:
+                    #self.ids["LoggedIn"].text = "Logged In"
+                    self.ids["login"].text = ""
+                    self.ids["passw"].text = ""
+                    self.manager.current = "mainmenu"
+                else:
+                    self.ids["LoggedIn"].text = "Incorrect Password"
+        source = UrlRequest(url,authenticate)
+        '''if(source.text == "null"):
             print("error incorrect username")
             self.ids["LoggedIn"].text = "Incorrect Username"
         else:
@@ -210,7 +247,7 @@ class Login(Screen):
                 self.ids["passw"].text = ""
                 self.manager.current = "mainmenu"
             else:
-                self.ids["LoggedIn"].text = "Incorrect Password"
+                self.ids["LoggedIn"].text = "Incorrect Password"'''
 
 class Register(Screen):
     def create_new_account(self):
@@ -218,8 +255,8 @@ class Register(Screen):
         password = str(self.ids["passw"].text)
         payload = {username:password}
         print(json.dumps(payload))
-        r = requests.patch("https://posdemo-68bbd.firebaseio.com/username.json", data=json.dumps(payload))
-        print(r.content)
+        #r = requests.patch("https://posdemo-68bbd.firebaseio.com/username.json", data=json.dumps(payload))
+        #print(r.content)
         self.ids["login"].text = ""
         self.ids["passw"].text = ""
         
@@ -236,13 +273,44 @@ class OrderScreen(Screen):
     def getFood(self):
         print("got Food")
         url = "https://posdemo-68bbd.firebaseio.com/Food.json"
-        source = requests.get(url)
-        jsonObj = source.json()
+        def displayName(source,results):
+            print(type(results))
+            food = self.ids["searchBox"].text
+            print(food)
+            foundFood = False
+            for item in results:
+                print(results[item]["Name"])
+                if(food.lower() == results[item]["Name"].lower()):
+                    name = Label(text="Name:"+results[item]["Name"],font_size=25,pos_hint={"center_x": 0.5, "center_y":0.7})
+                    description = Label(text="Description:"+results[item]["Description"],font_size=20,pos_hint={"center_x": 0.5, "center_y":0.6})
+                    self.add_widget(name)
+                    self.add_widget(description)
+                    foundFood=True
+                    self.ids["searchBox"].text
+                    b = Button(text="Add Food to table",font_size=32,color=[1, 1, 1, 1],size=[150, 50],size_hint=[.7, .15],background_color=[0.88, 0.88, 0.88, 1], pos_hint={"center_x": 0.5, "center_y":0.4})
+                    self.add_widget(b)
+                    break
+            if(not foundFood):
+                l = Label(text="No Food Found in Database",font_size=25,pos_hint={"center_x": 0.5, "center_y":0.7})
+                self.add_widget(l)
+            #jsonObj = results.json()
+            #ti = TextInput(placeholder="Enter Food", size_hint=[.5, .1], pos_hint={"center_x": 0.5, "center_y":0.9}, font_size=32)
+            #self.add_widget(ti)
+            #bn = Button(text="poop",size_hint=[.15, .15], background_color=[0.88, 0.88, 0.88, 1],)
+            #self.add_widget(bn)
+            btns = []
+            for item in results:
+                print(results[item]["Name"])
+                bn = Button(text=results[item]["Name"])
+                btns.append(bn)
+
+        source = UrlRequest(url,displayName)
+        '''jsonObj = source.json()
         for item in jsonObj:
             print(jsonObj[item]["Name"])
-            btn1 = Button(text=jsonObj[item]["Name"])
-            self.add_widget(btn1)
-        #print(jsonObj["Name"])
+            #btn1 = Button(text=jsonObj[item]["Name"])
+            #self.add_widget(btn1)
+        #print(jsonObj["Name"])'''
 
 
 screen_manager = ScreenManager()
