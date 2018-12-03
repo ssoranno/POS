@@ -3,7 +3,7 @@
 
 import kivy
 #kivy.require('1.9.0')
-#import requests
+import requests
 #import json
 
 from kivy.app import App
@@ -128,6 +128,7 @@ Builder.load_string("""
         submitB:
             pos_hint: {"center_x": 0.8, "center_y":0.9}
             on_press: root.getFood()
+        
         B:
             text: "Back"
             pos_hint: {"center_x": 0.5, "center_y":0.2}
@@ -255,8 +256,8 @@ class Register(Screen):
         password = str(self.ids["passw"].text)
         payload = {username:password}
         print(json.dumps(payload))
-        #r = requests.patch("https://posdemo-68bbd.firebaseio.com/username.json", data=json.dumps(payload))
-        #print(r.content)
+        r = requests.patch("https://posdemo-68bbd.firebaseio.com/username.json", data=json.dumps(payload))
+        print(r.content)
         self.ids["login"].text = ""
         self.ids["passw"].text = ""
         
@@ -273,6 +274,13 @@ class OrderScreen(Screen):
     def getFood(self):
         print("got Food")
         url = "https://posdemo-68bbd.firebaseio.com/Food.json"
+        def addFoodToTable(instance):
+            self.ids["searchBox"].text = ""
+            #self.ids["name"].text = ""
+            #self.ids["description"].text = ""
+            self.manager.current = "tableview"
+            print("h1")
+            
         def displayName(source,results):
             print(type(results))
             food = self.ids["searchBox"].text
@@ -287,7 +295,12 @@ class OrderScreen(Screen):
                     self.add_widget(description)
                     foundFood=True
                     self.ids["searchBox"].text
-                    b = Button(text="Add Food to table",font_size=32,color=[1, 1, 1, 1],size=[150, 50],size_hint=[.7, .15],background_color=[0.88, 0.88, 0.88, 1], pos_hint={"center_x": 0.5, "center_y":0.4})
+                    b = Button(text="Add Food to table",
+                        font_size=32,color=[1, 1, 1, 1],
+                        size=[150, 50],size_hint=[.7, .15],
+                        background_color=[0.88, 0.88, 0.88, 1], 
+                        pos_hint={"center_x": 0.5, "center_y":0.4},
+                        on_press=addFoodToTable)
                     self.add_widget(b)
                     break
             if(not foundFood):
