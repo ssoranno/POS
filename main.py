@@ -4,7 +4,7 @@
 import kivy
 #kivy.require('1.9.0')
 import requests
-#import json
+import json
 
 from kivy.app import App
 #from kivy.uix.floatlayout import FloatLayout
@@ -15,7 +15,7 @@ from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.textinput import TextInput
-from  kivy.uix.label import Label
+from kivy.uix.label import Label
 
 Builder.load_string("""
 <B@Button>:
@@ -128,13 +128,32 @@ Builder.load_string("""
         submitB:
             pos_hint: {"center_x": 0.8, "center_y":0.9}
             on_press: root.getFood()
-        
+        Label:
+            text: ""
+            font_size: 25
+            pos_hint: {"center_x": 0.5, "center_y":0.7}
+            id: name
+        Label:
+            text: ""
+            font_size: 20
+            pos_hint: {"center_x": 0.5, "center_y":0.6}
+            id: description
+        B:
+            text: "Add Food to table" 
+            visible: False
+            size_hint_x: 0.7 if self.visible else 0
+            opacity: 1 if self.visible else 0
+            disabled: not self.visible
+            id: addFood
+            pos_hint: {"center_x": 0.5, "center_y":0.4}
+            on_press: root.addFoodToTable()
         B:
             text: "Back"
             pos_hint: {"center_x": 0.5, "center_y":0.2}
             on_press: 
                 root.manager.current = "tableview"
-                root.manager.transition.direction = 'left' 
+                root.manager.transition.direction = 'left'
+                root.addFoodToTable() 
 
 <TableView>:
     FloatLayout:
@@ -271,15 +290,29 @@ class MainMenu(Screen):
 class TableView(Screen):
     pass
 class OrderScreen(Screen):
+    def addFoodToTable(self):
+            print("h2")
+            self.ids["searchBox"].text = ""
+            self.ids["name"].text = ""
+            self.ids["description"].text = ""
+            #self.ids["description"].visible = False
+            self.manager.current = "tableview"
+            print("h3")
+            self.ids["addFood"].visible = False
+            print("h1")
     def getFood(self):
         print("got Food")
         url = "https://posdemo-68bbd.firebaseio.com/Food.json"
-        def addFoodToTable(instance):
+        '''def addFoodToTable(instance):
+            print("h2")
             self.ids["searchBox"].text = ""
-            #self.ids["name"].text = ""
-            #self.ids["description"].text = ""
+            self.ids["name"].text = ""
+            self.ids["description"].text = ""
+            #self.ids["description"].visible = False
             self.manager.current = "tableview"
-            print("h1")
+            print("h3")
+            self.ids["addFood"].visible = False
+            print("h1")'''
             
         def displayName(source,results):
             print(type(results))
@@ -289,33 +322,37 @@ class OrderScreen(Screen):
             for item in results:
                 print(results[item]["Name"])
                 if(food.lower() == results[item]["Name"].lower()):
-                    name = Label(text="Name:"+results[item]["Name"],font_size=25,pos_hint={"center_x": 0.5, "center_y":0.7})
-                    description = Label(text="Description:"+results[item]["Description"],font_size=20,pos_hint={"center_x": 0.5, "center_y":0.6})
-                    self.add_widget(name)
-                    self.add_widget(description)
+                    self.ids["addFood"].visible = True
+                    self.ids["name"].text = "Name:"+results[item]["Name"]
+                    self.ids["description"].text = "Description:"+results[item]["Description"]
+                    #name = Label(text="Name:"+results[item]["Name"],font_size=25,pos_hint={"center_x": 0.5, "center_y":0.7})
+                    #description = Label(text="Description:"+results[item]["Description"],font_size=20,pos_hint={"center_x": 0.5, "center_y":0.6})
+                    #self.add_widget(name)
+                    #self.add_widget(description)
                     foundFood=True
                     self.ids["searchBox"].text
-                    b = Button(text="Add Food to table",
+                    '''b = Button(text="Add Food to table",
                         font_size=32,color=[1, 1, 1, 1],
                         size=[150, 50],size_hint=[.7, .15],
                         background_color=[0.88, 0.88, 0.88, 1], 
                         pos_hint={"center_x": 0.5, "center_y":0.4},
                         on_press=addFoodToTable)
-                    self.add_widget(b)
+                    self.add_widget(b)'''
                     break
             if(not foundFood):
-                l = Label(text="No Food Found in Database",font_size=25,pos_hint={"center_x": 0.5, "center_y":0.7})
-                self.add_widget(l)
+                #l = Label(text="No Food Found in Database",font_size=25,pos_hint={"center_x": 0.5, "center_y":0.7})
+                #self.add_widget(l)'''
+                self.ids["name"].text = "No Food Found in Database"
             #jsonObj = results.json()
             #ti = TextInput(placeholder="Enter Food", size_hint=[.5, .1], pos_hint={"center_x": 0.5, "center_y":0.9}, font_size=32)
             #self.add_widget(ti)
             #bn = Button(text="poop",size_hint=[.15, .15], background_color=[0.88, 0.88, 0.88, 1],)
             #self.add_widget(bn)
-            btns = []
+            '''btns = []
             for item in results:
                 print(results[item]["Name"])
                 bn = Button(text=results[item]["Name"])
-                btns.append(bn)
+                btns.append(bn)'''
 
         source = UrlRequest(url,displayName)
         '''jsonObj = source.json()
