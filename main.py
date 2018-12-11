@@ -1,6 +1,6 @@
 # First Kivy App Demo
 # Shows Front End Functionality
-
+# import libraries
 import kivy
 #kivy.require('1.9.0')
 import requests
@@ -17,6 +17,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.textinput import TextInput
 from kivy.uix.label import Label
 
+# Kivy file which shows the design for each page of the app.
 Builder.load_string("""
 <B@Button>:
     font_size: 32
@@ -224,7 +225,7 @@ Builder.load_string("""
             root.manager.transition.direction = 'right'
 """)
 
-
+# Welcome screen instantiation
 class Welcome(Screen):
     pass
 
@@ -233,12 +234,13 @@ class Welcome(Screen):
     password = results
     print("auth:")
     print(password)'''
-
+# Login screen instantiation
 class Login(Screen):
 
     #def getInfo(source,results):
     #    print(results)
-    
+    # This function gets verifies the credentials of the user and verifies them with the credentials 
+    # in the database
     def verify_credentials(self):
         url = "https://posdemo-68bbd.firebaseio.com/username/"+self.ids["login"].text+".json"
         def authenticate(source,results):
@@ -268,8 +270,9 @@ class Login(Screen):
                 self.manager.current = "mainmenu"
             else:
                 self.ids["LoggedIn"].text = "Incorrect Password"'''
-
+# Register screen class instantiation
 class Register(Screen):
+    # This function gets the username and password of the user and stores it in the database.
     def create_new_account(self):
         username = str(self.ids["login"].text)
         password = str(self.ids["passw"].text)
@@ -281,15 +284,21 @@ class Register(Screen):
         self.ids["passw"].text = ""
         
 
-
+# Call screen class
 class Call(Screen):
     pass
 
+# main menu class
 class MainMenu(Screen):
     pass
+
+# Table View class
 class TableView(Screen):
     pass
+
+# Order Screen class
 class OrderScreen(Screen):
+    # This function adds food entered to database and deletes the text from the page. 
     def addFoodToTable(self):
             print("h2")
             self.ids["searchBox"].text = ""
@@ -300,6 +309,7 @@ class OrderScreen(Screen):
             print("h3")
             self.ids["addFood"].visible = False
             print("h1")
+    # This function gets the food from the database and displays it to the app screen.
     def getFood(self):
         print("got Food")
         url = "https://posdemo-68bbd.firebaseio.com/Food.json"
@@ -313,7 +323,8 @@ class OrderScreen(Screen):
             print("h3")
             self.ids["addFood"].visible = False
             print("h1")'''
-            
+        # This function receives the information collected from the URLRequest method.
+        # the function receives  the     
         def displayName(source,results):
             print(type(results))
             food = self.ids["searchBox"].text
@@ -362,9 +373,9 @@ class OrderScreen(Screen):
             #self.add_widget(btn1)
         #print(jsonObj["Name"])'''
 
-
+# create screen manager
 screen_manager = ScreenManager()
-
+# add app pages to screen manager
 screen_manager.add_widget(Welcome(name='welcome'))
 screen_manager.add_widget(Login(name='login'))
 screen_manager.add_widget(Register(name='register'))
@@ -373,6 +384,7 @@ screen_manager.add_widget(MainMenu(name='mainmenu'))
 screen_manager.add_widget(TableView(name='tableview'))
 screen_manager.add_widget(OrderScreen(name='oscreen'))
 
+# Initialize kivy app
 class HelloKivy(App):
     def build(self):
         Window.clearcolor = (0,0,.5,1)
