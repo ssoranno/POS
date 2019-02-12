@@ -14,15 +14,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'home.html',
 })
 export class HomePage {
-
+  uid: string;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.uid = navParams.get('uid');
+    console.log("HOMEUID:",this.uid);
   }
+
+  num: number;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
   pay(){
-    this.navCtrl.push('PayPage');
+    this.navCtrl.push('PayPage', { data:this.num, data2:this.uid });
   }
 
 }

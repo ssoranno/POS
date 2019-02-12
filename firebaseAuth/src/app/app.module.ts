@@ -5,7 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from '@angular/fire'; 
 import { AngularFireAuthModule } from '@angular/fire/auth';
-//import { Stripe } from '@ionic-native/stripe';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { Stripe } from '@ionic-native/stripe';
+import { CardIO } from '@ionic-native/card-io';
 
 import { MyApp } from './app.component';
 //import { HomePage } from '../pages/home/home';
@@ -30,7 +32,8 @@ export const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +42,8 @@ export const firebaseConfig = {
     WelcomePage
   ],
   providers: [
-    //Stripe,
+    Stripe,
+    CardIO,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

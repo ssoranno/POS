@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 //import { Http, Headers } from '@angular/http';
-//import { Stripe } from '@ionic-native/stripe';
+import { Stripe } from '@ionic-native/stripe';
+import { CardIO } from '@ionic-native/card-io';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { MyApp } from '../../app/app.component';
 /**
  * Generated class for the PayPage page.
  *
@@ -9,7 +12,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-declare var Stripe;
+//declare var Stripe;
 
 @IonicPage()
 @Component({
@@ -17,24 +20,79 @@ declare var Stripe;
   templateUrl: 'pay.html',
 })
 export class PayPage {
-  stripe = Stripe('pk_test_m91z8WAjgeg3sn3MBPIDegev');
-  /*cardinfo: any = {
+  //stripe = Stripe('pk_test_m91z8WAjgeg3sn3MBPIDegev');
+  cardinfo: any = {
     number: '',
     expMonth: '',
     expYear: '',
     cvc: ''
-  }*/
-  card: any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, /*public stripe: Stripe, public http: Http*/) {
   }
-
+  //card: any;
+  price: number;
+  arrData = [];
+  uid: string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public stripe: Stripe, /*public http: Http*/private cardIO: CardIO, public fdatabase: AngularFireDatabase) {
+    this.price = navParams.get('data');
+    this.uid = navParams.get('data2');
+    console.log("payUID:", this.uid);
+    //sconsole.log(this.price);
+    /*this.fdatabase.list('/').valueChanges().subscribe(data=>{
+      this.arrData = data;
+      console.log(this.arrData);
+    });*/
+    this.fdatabase.database.ref('/username').once('value').then(function(snapshot) {
+        console.log(snapshot.val());
+    });
+  }
+  
   ionViewDidLoad() {
-    this.setupStripe();
+    //this.stripe.setPublishableKey('pk_test_m91z8WAjgeg3sn3MBPIDegev');
+    /*let card = {
+      number: '4242424242424242',
+      expMonth: 12,
+      expYear: 2020,
+      cvc: '220'
+     };*/
+     /*this.fdatabase.list('/username').valueChanges().subscribe(data =>{
+       console.log(JSON.stringify(data));
+     });*/
+     //this.fdatabase.database.ref('/username')
+    /*this.cardIO.canScan().then(
+      (res: boolean) => {
+        if(res){
+          let options = {
+            requireExpiry: true,
+            requireCVV: false,
+            requirePostalCode: false
+          };
+          
+          this.cardIO.scan(options).then(
+            (value) => {
+              //document.getElementsByName("cardnumber")
+              //this.card.cardNumber = value.cardNumber;
+              //console.log(this.card.cardNumber);
+              if(value.cardNumber !== null){
+                console.log("got here");
+                this.cardinfo.number = value.cardNumber;
+                console.log(value.cardNumber);
+              } 
+            }
+          );
+        }
+      }
+    );*/
+    //this.setupStripe("123456789");
+    /*this.stripe.createCardToken(card)
+   .then(token => {console.log(token.id);
+    console.log("we good");})
+   .catch(error => console.error(error));*/
   }
 
-  setupStripe(){
+  /*setupStripe(cardNum:string){
+    console.log("cnum:",cardNum);
     let elements = this.stripe.elements();
+    //elements.cardnumber = cardNum;
+    //console.log("pooop");
     var style = {
       base: {
         color: '#32325d',
@@ -53,12 +111,12 @@ export class PayPage {
     };
  
     this.card = elements.create('card', { style: style });
- 
+    //console.log("Elements:",elements.cardNumber);
     this.card.mount('#card-element');
- 
     this.card.addEventListener('change', event => {
       var displayError = document.getElementById('card-errors');
       if (event.error) {
+        console.log("got error!!");
         displayError.textContent = event.error.message;
       } else {
         displayError.textContent = '';
@@ -80,12 +138,25 @@ export class PayPage {
         }
       });
     });
-  }
+  }*/
 
-  //pay() {
-    //this.stripe.setPublishableKey('pk_test_m91z8WAjgeg3sn3MBPIDegev');
-    //this.stripe.createCardToken(this.cardinfo).then(token => console.log(token.id))
-    //.catch(error => console.dir(error));
-  //}
+  pay() {
+    //p = this.price;
+    /*this.fdatabase.database.ref(`/payments/${this.uid}`).set({
+      amount:this.price,
+      token:12345678
+    });*/
+    this.stripe.setPublishableKey('pk_test_m91z8WAjgeg3sn3MBPIDegev');
+    this.stripe.createCardToken(this.cardinfo).then(token => {console.log(token.id);
+      console.log(this.uid);
+      this.fdatabase.database.ref(`/payments/${this.uid}`).push({
+        amount:this.price,
+        t:token
+      });
+    })
+    .catch(error => console.dir(error));
+    //console.log(payment);
+    //this.fdatabase.database.ref(`/payments/${this.uid}`).set(payment);
+  }
 
 }

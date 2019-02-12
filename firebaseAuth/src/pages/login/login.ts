@@ -30,7 +30,10 @@ export class LoginPage {
       const result = await this.afAuth.auth.signInWithEmailAndPassword(this.account.email,this.account.password);
       console.log("result",result);
       if(result){
-        this.navCtrl.setRoot('HomePage');
+        console.log(result.user.uid)
+        this.navCtrl.setRoot('HomePage', {
+          uid: result.user.uid
+        });
       }
     } catch (e){
       console.log("Error:")
