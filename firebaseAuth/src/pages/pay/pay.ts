@@ -57,7 +57,8 @@ export class PayPage {
        console.log(JSON.stringify(data));
      });*/
      //this.fdatabase.database.ref('/username')
-    /*this.cardIO.canScan().then(
+
+    this.cardIO.canScan().then(
       (res: boolean) => {
         if(res){
           let options = {
@@ -80,7 +81,7 @@ export class PayPage {
           );
         }
       }
-    );*/
+    );
     //this.setupStripe("123456789");
     /*this.stripe.createCardToken(card)
    .then(token => {console.log(token.id);
