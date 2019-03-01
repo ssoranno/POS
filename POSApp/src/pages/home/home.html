@@ -11,5 +11,9 @@
 </ion-header>
 
 <ion-content padding>
-
+  <div class="payments" *ngFor="let payment of payments">
+    <div class="pid">{{payment.amount}}</div>
+    <!--<div class="pid">{{payment.amount}}</div>-->
+  </div>
+<p>{{maxA}}</p>
 </ion-content>
