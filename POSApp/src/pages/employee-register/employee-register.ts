@@ -19,11 +19,11 @@ export class EmployeeRegisterPage {
   }
 
   register(){
-    this.navCtrl.push('EditEmployeeRolesPage');
+    this.navCtrl.push('NewUserPage');
   }
 
-  editRole(){
-    this.navCtrl.push('NewUserPage');
+  editRoles(){
+    this.navCtrl.push('EditEmployeeRolesPage');
   }
 
 }
