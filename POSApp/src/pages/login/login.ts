@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,8 +21,8 @@ export class LoginPage {
     email: '',
     password: ''
   };
-
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  Role:number;
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
   }
 
   async login(){
@@ -31,10 +32,20 @@ export class LoginPage {
       console.log("result",result);
       if(result){
         //console.log(result.user.uid)
-        this.navCtrl.setRoot('HomePage');
-        /*this.navCtrl.setRoot('HomePage', {
-          uid: result.user.uid
-        });*/
+        this.fdatabase.database.ref('Users/'+result.user.uid).once('value')
+        .then(snapshot => {
+          this.Role = snapshot.val().Role;
+          console.log(this.Role);
+          if(this.Role == 1){
+            this.navCtrl.setRoot('AdminPage');
+          } else if(this.Role == 2){
+            this.navCtrl.setRoot('ServerPage');
+          } else if(this.Role == 3){
+            this.navCtrl.setRoot('HostessPage');
+          } else{
+            this.navCtrl.setRoot('HomePage');
+          }
+        });
       }
     } catch (e){
       console.log("Error:")

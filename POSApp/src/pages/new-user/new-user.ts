@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 
 /**
- * Generated class for the SignupPage page.
+ * Generated class for the NewUserPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,24 +12,24 @@ import { AngularFireDatabase } from '@angular/fire/database';
 
 @IonicPage()
 @Component({
-  selector: 'page-signup',
-  templateUrl: 'signup.html',
+  selector: 'page-new-user',
+  templateUrl: 'new-user.html',
 })
-export class SignupPage {
-  account: { name: string, email: string, password: string } = {
+export class NewUserPage {
+
+  account: { name: string, email: string, password: string, role: number } = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    role: 0
   };
 
-  userInfo: { name:string, Role:number } = {
+  /*userInfo: { name:string, Role:number } = {
     name: '',
     Role: 1
-  };
+  };*/
 
-  signedup = '';
-
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase, private afAuth: AngularFireAuth) {
   }
 
   async register(){
@@ -37,11 +37,15 @@ export class SignupPage {
     try {
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(this.account.email,this.account.password);
       console.log(result.user.uid);
-      this.userInfo.name = this.account.name;
-      this.fdatabase.database.ref('/Users/'+result.user.uid).set(this.userInfo);
-      this.signedup = "Signed up!";
+      //this.userInfo.name = this.account.name;
+      this.fdatabase.database.ref('/Users/'+result.user.uid).set({
+        name: this.account.name,
+        Role: this.account.role
+      });
+      //this.signedup = "Signed up!";
     } catch (e){
       console.dir(e);
     }
   }
+
 }

@@ -1,0 +1,18 @@
+<!--
+  Generated template for the EditEmployeeRolesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Employee Roles</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-searchbar placeholder = "Find Employee by name" (ionInput)="getEmployee($event)"></ion-searchbar>
+  <ion-item *ngFor="let name of userNames">
+      <h2> {{ name }} </h2>
+    </ion-item>
+</ion-content>
