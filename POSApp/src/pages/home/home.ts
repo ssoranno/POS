@@ -21,17 +21,25 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
-    this.fdatabase.database.ref('/payments/7k0x90oIGPVoyHF78Enu7u4DAGT2').once('value').then(function(snapshot) {
-      console.log(snapshot.val());
+    this.fdatabase.database.ref('/payments/7k0x90oIGPVoyHF78Enu7u4DAGT2').once('value').then(function(snapshot) 
+    {
+      //console.log(snapshot.val());
       var maxAmount = 0;
       for(var id in snapshot.val()){
-        console.log(id);
+        //console.log(id);
         if(snapshot.child(id).val().amount > maxAmount){
           maxAmount = snapshot.child(id).val().amount;
         }
       }
-      console.log(maxAmount);
+      //console.log(maxAmount);
     });
-  }
+
+	}
+
+    host()
+    {
+    	this.navCtrl.push('HostTabPage');
+    }
+  
 
 }

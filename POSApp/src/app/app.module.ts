@@ -9,6 +9,10 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { MyApp } from './app.component';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { AddTablePage } from '../pages/add-table/add-table';
+import { HostPage } from '../pages/host/host';
+import { WaitListPage} from '../pages/wait-list/wait-list';
+import { AddWaitListPage } from '../pages/add-wait-list/add-wait-list';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDNTuztJ68PGwBCFGVtYae2Uwg7kQjCwH0",
@@ -22,7 +26,12 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    WelcomePage
+    WelcomePage,
+    AddTablePage,
+    HostPage, 
+    WaitListPage,
+    AddWaitListPage
+
   ],
   imports: [
     BrowserModule,
@@ -34,7 +43,11 @@ export const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    WelcomePage
+    WelcomePage,
+    AddTablePage,
+     HostPage, 
+    WaitListPage,
+    AddWaitListPage
   ],
   providers: [
     StatusBar,
