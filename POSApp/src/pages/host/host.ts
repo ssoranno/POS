@@ -37,10 +37,10 @@ export class HostPage {
 	
   }
 
-  navigateToAddTablePage()
-  {
-  	this.navCtrl.push(AddTablePage);
-  }
+  // navigateToAddTablePage()
+  // {
+  // 	this.navCtrl.push(AddTablePage);
+  // }
 
   fillTable(tableNumber: string)
   {

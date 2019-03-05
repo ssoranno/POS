@@ -41,7 +41,7 @@ export class LoginPage {
           } else if(this.Role == 2){
             this.navCtrl.setRoot('ServerPage');
           } else if(this.Role == 3){
-            this.navCtrl.setRoot('HostessPage');
+            this.navCtrl.setRoot('HostTabPage');
           } else{
             this.navCtrl.setRoot('HomePage');
           }
