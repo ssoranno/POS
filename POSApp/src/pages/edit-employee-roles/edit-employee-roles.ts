@@ -55,4 +55,11 @@ export class EditEmployeeRolesPage {
     console.log(q);
   }
 
+  editRole(name){
+    console.log(name);
+    this.navCtrl.push('EditRolesPage',{
+      Name: name
+    });
+  }
+
 }
