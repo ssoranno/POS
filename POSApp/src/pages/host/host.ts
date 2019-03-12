@@ -57,6 +57,8 @@ export class HostPage {
     this.fdatabase.database.ref('Tables').orderByChild('tableNumber').equalTo(tableNumber).once("child_added" , snapshot =>
     {
       snapshot.ref.update({ tableStatus: "Empty"})
+      //console.log(this.tableList[Number(tableNumber)-1]);
+      this.tableList[Number(tableNumber)-1].tableStatus="Empty";
     });
   }
 
