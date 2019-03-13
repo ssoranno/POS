@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase} from '@angular/fire/database';
 import { AddTablePage} from '../add-table/add-table';
-import { ChangeDetectorRef } from '@angular/core';
 
 import{ TableItem } from '../../models/table-item/table-item.interface';
 /**
@@ -21,7 +20,7 @@ export class HostPage {
 
 	tableList: Array <TableItem> =[];  
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-  	private fdatabase: AngularFireDatabase, private cdr: ChangeDetectorRef) {
+  	private fdatabase: AngularFireDatabase) {
   	
   }
   
@@ -49,7 +48,11 @@ export class HostPage {
     {
       snapshot.ref.update({ tableStatus: "Full"})
     });
-    this.cdr.detectChanges();
+    for (let i in this.tableList){
+      if(this.tableList[i].tableNumber==tableNumber){
+        this.tableList[i].tableStatus="Full";
+      }
+    }
   }
 
   clearTable(tableNumber: string)
@@ -58,9 +61,13 @@ export class HostPage {
     {
       snapshot.ref.update({ tableStatus: "Empty"})
       //console.log(this.tableList[Number(tableNumber)-1]);
-      this.tableList[Number(tableNumber)-1].tableStatus="Empty";
     });
-  }
+    for (let i in this.tableList){
+        if(this.tableList[i].tableNumber==tableNumber){
+          this.tableList[i].tableStatus="Empty";
+        }
+      }
+    }
 
 
 }

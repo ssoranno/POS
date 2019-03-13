@@ -19,18 +19,18 @@ export class AdminPage {
   }
 
   employees() {
-    console.log("employee");
+    console.log("Employee");
     this.navCtrl.push('EmployeeRegisterPage');
   }
 
   menu() {
-    console.log("menu");
+    console.log("Menu");
     //this.navCtrl.push('ServerPage');
   }
 
   tables() {
-    console.log("table");
-    //this.navCtrl.push('ServerPage');
+    console.log("Table");
+    this.navCtrl.push('AdminTablesPage');
   }
 
 }
