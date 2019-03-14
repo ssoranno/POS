@@ -25,7 +25,7 @@ export class AdminPage {
 
   menu() {
     console.log("menu");
-    //this.navCtrl.push('ServerPage');
+    this.navCtrl.push('MenuOptionsPage');
   }
 
   tables() {
