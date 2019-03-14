@@ -31,7 +31,7 @@ export class AdminTablesPage {
   ionViewDidEnter(){
     console.log('ionViewDidEnter AdminTablesPage');
     this.refreshTableList();
-    this.tableListSort();
+    
   }
 
 
@@ -76,14 +76,12 @@ export class AdminTablesPage {
           this.tableList.push(itemSnap.val());
         }
       });
+        this.tableListSort();
     });
-
+    
   }
   tableListSort(){
-    console.log(this.tableList);
-    console.log(this.tableList.length);
      this.tableList.sort((leftSide, rightSide): number=>{
-      console.log(leftSide.tableNumber);
       if (leftSide.tableNumber<rightSide.tableNumber) return -1;
       if (leftSide.tableNumber>rightSide.tableNumber) return 1;
       return 0;
