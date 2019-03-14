@@ -27,13 +27,13 @@ export class WaitListPage {
   ionViewDidLoad() 
   {
     console.log('ionViewDidLoad WaitListPage');
+     this.refreshWaitList();
 
-	    this.fdatabase.database.ref('WaitList').orderByChild('personName').once('value').then(snapshot =>{
-	      snapshot.forEach(itemSnap => {
-	        console.log(itemSnap.val());
-	        this.waitList.push(itemSnap.val());
-	      });
-	  });
+  }
+
+   ionViewDidEnter(){
+    console.log('ionViewDidEnter AdminTablesPage');
+    this.refreshWaitList();
   }
 
 
@@ -50,5 +50,27 @@ clearWaitListItem(personName: string)
 	  snapshot.ref.remove();
 	});
 }
+
+refreshWaitList()
+{
+  this.fdatabase.database.ref('WaitList').once('value').then(snapshot =>{
+    snapshot.forEach(itemSnap => {
+      var ind = itemSnap.val().email;
+      var found = false;
+      for (var i =0; i<this.waitList.length; i++)
+      {
+        if (this.waitList[i].email == ind)
+        {
+          found = true;
+        }
+      }
+      if (found==false)
+      {
+        this.waitList.push(itemSnap.val());
+      }
+    });
+  });
+
+  }
 
 }
