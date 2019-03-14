@@ -19,7 +19,7 @@ export class AdminPage {
   }
 
   employees() {
-    console.log("employee");
+    console.log("Employee");
     this.navCtrl.push('EmployeeRegisterPage');
   }
 
@@ -29,8 +29,8 @@ export class AdminPage {
   }
 
   tables() {
-    console.log("table");
-    //this.navCtrl.push('ServerPage');
+    console.log("Table");
+    this.navCtrl.push('AdminTablesPage');
   }
 
 }
