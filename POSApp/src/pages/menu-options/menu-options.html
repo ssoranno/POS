@@ -20,10 +20,10 @@
         <ion-item-sliding *ngFor="let food of foodList">
           <ion-item >
               <h1>{{food.name}}</h1>
-              <h2>{{food.price}}</h2>
+              <h2>Price: {{food.price}}</h2>
         </ion-item>
         <ion-item-options side="right">
-            <button ion-button color="danger" (click)="clearTable(item.tableNumber)">
+            <button ion-button color="danger" (click)="clearFood(item.tableNumber)">
               <ion-icon name="trash"></ion-icon>
               Remove
             </button>
