@@ -17,31 +17,44 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class MenuOptionsPage {
   foodList = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
+    
+  }
+
+  ionViewDidEnter(){
+    console.log('ionViewDidEnter AdminTablesPage');
+    this.foodList = [];
     this.fdatabase.database.ref('Food').once('value')
         .then(snapshot => {
           snapshot.forEach(food => {
-            console.log(food.val());
             this.foodList.push(food.val());
           });
-          console.log(this.foodList);
         });
+    
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MenuOptionsPage');
+
+  clearFood(foodName){
+    //console.log(this.foodList);
+    this.fdatabase.database.ref('Food').orderByChild('name').equalTo(foodName).once("child_added" , snapshot =>
+    {
+      snapshot.ref.remove();
+      for (let i in this.foodList)
+      {
+        if (this.foodList[i].name == foodName)
+        {
+          this.foodList.splice(Number(i), 1);
+        }
+      }
+    });
   }
 
-  /*viewMenu(){
-    //this.navCtrl.push('MenuOptionsPage');
-  }*/
+  editFood(foodName){
+    this.navCtrl.push('EditFoodPage', {name:foodName});
+  }
 
   addItem(){
     console.log('add');
     this.navCtrl.push('AddFoodPage');
   }
-
-  /*editMenu(){
-    this.navCtrl.push('editOptionsPage');
-  }*/
 
 }
