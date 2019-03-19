@@ -4,6 +4,7 @@ import { AngularFireDatabase} from '@angular/fire/database';
 
 import { WaitListItem } from '../../models/wait-list-item/wait-list-item.interface';
 import { AddWaitListPage } from '../add-wait-list/add-wait-list';
+import { SMS } from '@ionic-native/sms';
 
 /**
  * Generated class for the WaitListPage page.
@@ -21,7 +22,7 @@ export class WaitListPage {
 
   waitList: Array <WaitListItem> =[];
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-  	private fdatabase: AngularFireDatabase) {
+  	private fdatabase: AngularFireDatabase, private sms: SMS) {
   }
 
   ionViewDidLoad() 
@@ -43,23 +44,36 @@ navigateToAddWaitList()
 }
 
 
-clearWaitListItem(personName: string)
+clearWaitListItem(phoneNum: string)
 {
-	this.fdatabase.database.ref('WaitList').orderByChild('name').equalTo(personName).once("child_added" , snapshot =>
+	this.fdatabase.database.ref('WaitList').orderByChild('phoneNum').equalTo(phoneNum).once("child_added" , snapshot =>
 	{
 	  snapshot.ref.remove();
-	});
+  });
+
+  for (let i in this.waitList)
+    {
+       if (this.waitList[i].phoneNum == phoneNum)
+      {
+        this.waitList.splice(Number(i), 1);
+      }
+    }
+}
+
+alertWaiting(phoneNum: string)
+{
+  this.sms.send(phoneNum, 'Your table is ready. Please arrive in 5 minutes.' );
 }
 
 refreshWaitList()
 {
   this.fdatabase.database.ref('WaitList').once('value').then(snapshot =>{
     snapshot.forEach(itemSnap => {
-      var ind = itemSnap.val().email;
+      var ind = itemSnap.val().phoneNum;
       var found = false;
       for (var i =0; i<this.waitList.length; i++)
       {
-        if (this.waitList[i].email == ind)
+        if (this.waitList[i].phoneNum == ind)
         {
           found = true;
         }
