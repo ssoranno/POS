@@ -20,14 +20,18 @@
         <ion-item-sliding *ngFor="let food of foodList">
           <ion-item >
               <h1>{{food.name}}</h1>
-              <h2>{{food.price}}</h2>
+              <h2>Price: {{food.price}}</h2>
         </ion-item>
         <ion-item-options side="right">
-            <button ion-button color="danger" (click)="clearTable(item.tableNumber)">
+            <button ion-button color="danger" (click)="clearFood(food.name)">
               <ion-icon name="trash"></ion-icon>
               Remove
             </button>
-          </ion-item-options>
+            <button ion-button color="primary" (click)="editFood(food.name)">
+                <ion-icon name="cafe"></ion-icon>
+                Edit
+            </button>
+        </ion-item-options>
         </ion-item-sliding>
-        </ion-list>
+      </ion-list>
 </ion-content>

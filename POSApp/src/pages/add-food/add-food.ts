@@ -30,6 +30,7 @@ export class AddFoodPage {
 
   registerFood(){
     this.fdatabase.database.ref('Food').push(this.food);
+    this.navCtrl.pop();
   }
 
 }
