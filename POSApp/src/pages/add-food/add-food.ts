@@ -15,9 +15,10 @@ import { AngularFireDatabase } from '@angular/fire/database';
   templateUrl: 'add-food.html',
 })
 export class AddFoodPage {
-  food: {name: string, description: string, price: number} = {
+  food: {name: string, description: string, type: number, price: number} = {
     name: "",
     description: "",
+    type: 0,
     price: 0
   };
 
@@ -29,6 +30,7 @@ export class AddFoodPage {
   }
 
   registerFood(){
+    //console.log(this.food.type);
     this.fdatabase.database.ref('Food').push(this.food);
     this.navCtrl.pop();
   }

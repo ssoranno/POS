@@ -22,6 +22,18 @@
   </ion-item>
 
   <ion-item>
+    <ion-label fixed>Type</ion-label>
+
+    <ion-select [(ngModel)]="food.type">
+      <ion-option value=1>Appietizer</ion-option>
+        <ion-option value=2>Breakfast</ion-option>
+        <ion-option value=3>Lunch</ion-option>
+        <ion-option value=4>Dinner</ion-option>
+        <ion-option value=5>Desert</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
     <ion-label fixed>Price</ion-label>
     <ion-input type="number" [(ngModel)]="food.price" name="price"></ion-input>
   </ion-item>
