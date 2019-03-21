@@ -69,5 +69,15 @@ export class HostPage {
       }
     }
 
+    condition(tableStatus: string)
+    {
+      if (tableStatus == "Empty"){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+
 
 }
