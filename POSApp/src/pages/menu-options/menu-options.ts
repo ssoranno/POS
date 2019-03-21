@@ -16,6 +16,11 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class MenuOptionsPage {
   foodList = [];
+  appList = [];
+  breakfastList = [];
+  lunchList = [];
+  dinnerList = [];
+  desertList = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
     
   }
@@ -27,7 +32,23 @@ export class MenuOptionsPage {
         .then(snapshot => {
           snapshot.forEach(food => {
             this.foodList.push(food.val());
+            if(food.val().type == "appetizer"){
+              this.appList.push(food.val());
+            } else if(food.val().type == "breakfast"){
+              this.breakfastList.push(food.val());
+            } else if(food.val().type == "lunch"){
+              this.lunchList.push(food.val());
+            } else if(food.val().type == "dinner"){
+              this.dinnerList.push(food.val());
+            } else if(food.val().type == "desert"){
+              this.desertList.push(food.val());
+            }
           });
+          console.log("app:",this.appList);
+          console.log("break:",this.breakfastList);
+          console.log("lunch:",this.lunchList);
+          console.log("dinner:",this.dinnerList);
+          console.log("desert:",this.desertList);
         });
     
   }

@@ -15,9 +15,10 @@ import { AngularFireDatabase } from '@angular/fire/database';
   templateUrl: 'edit-food.html',
 })
 export class EditFoodPage {
-  food: {name: string, description: string, price: number} = {
+  food: {name: string, description: string, type: number, price: number} = {
     name: "",
     description: "",
+    type: 0,
     price: 0
   };
   //databaseRef = this.fdatabase.database.ref('Food').orderByChild('name').equalTo(this.food.name);
@@ -28,6 +29,7 @@ export class EditFoodPage {
       .once("child_added" , snapshot => {
         this.food.description = snapshot.val().description;
         this.food.price = snapshot.val().price;
+        this.food.type = snapshot.val().type;
         this.id = snapshot.key;
         console.log("id:",this.id);
       });
