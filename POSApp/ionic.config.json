@@ -1,5 +1,7 @@
 {
   "name": "POSApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }

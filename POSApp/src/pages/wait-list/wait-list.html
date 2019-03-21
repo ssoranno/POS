@@ -24,10 +24,18 @@
         <h2>{{item.partySize}}</h2>
   </ion-item>
   <ion-item-options side="right">
-      <button ion-button color="danger" (click)="clearWaitListItem(item.name)">
-        <ion-icon name="trash"></ion-icon>
-        Seat
+
+    <button ion-button color="primary" (click)="alertWaiting(item.phoneNum)">
+        <ion-icon name="call"></ion-icon>
+        Alert
       </button>
+
+      <button ion-button color="danger" (click)="clearWaitListItem(item.phoneNum)">
+        <ion-icon name="trash"></ion-icon>
+        Clear
+      </button>
+
+      
     </ion-item-options>
   </ion-item-sliding>
   </ion-list>

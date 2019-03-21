@@ -31,7 +31,7 @@ export class AddWaitListPage {
   	this.fdatabase.database.ref('WaitList').push({
   		name: this.waitListItem.personName,
   		partySize: Number(this.waitListItem.partySize),
-  		email: this.waitListItem.email
+  		phoneNum: this.waitListItem.phoneNum
   	});
   	this.waitListItem = {} as WaitListItem;
 
