@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { WelcomePage } from '../welcome/welcome';
+
 
 /**
  * Generated class for the AdminPage page.
@@ -15,7 +18,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AdminPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth) {
   }
 
   employees() {
@@ -31,6 +34,15 @@ export class AdminPage {
   tables() {
     console.log("Table");
     this.navCtrl.push('AdminTablesPage');
+  }
+
+  logout() {
+    this.afAuth.auth.signOut().then(func => {
+      this.navCtrl.setRoot(WelcomePage);
+      //this.navCtrl.pop();
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
 }

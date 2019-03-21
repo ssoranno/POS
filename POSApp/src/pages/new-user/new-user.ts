@@ -42,6 +42,7 @@ export class NewUserPage {
         name: this.account.name,
         Role: this.account.role
       });
+      this.navCtrl.pop();
       //this.signedup = "Signed up!";
     } catch (e){
       console.dir(e);

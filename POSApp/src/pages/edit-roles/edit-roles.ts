@@ -39,6 +39,7 @@ export class EditRolesPage {
     console.log(this.newRole);
     this.fdatabase.database.ref('Users').orderByChild('name').equalTo(this.employeeName).once("child_added", snapshot =>{
       snapshot.ref.update({ Role: this.newRole});
+      this.navCtrl.pop();
     });
   }
 

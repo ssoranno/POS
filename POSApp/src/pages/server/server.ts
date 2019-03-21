@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { WelcomePage } from '../welcome/welcome';
 
 /**
  * Generated class for the ServerPage page.
@@ -15,11 +17,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ServerPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServerPage');
+  }
+
+  newTicket(){
+    this.navCtrl.push('OpenTicketPage');
+  }
+
+  logout() {
+    this.afAuth.auth.signOut().then(func => {
+      this.navCtrl.setRoot(WelcomePage);
+      //this.navCtrl.pop();
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
 }
