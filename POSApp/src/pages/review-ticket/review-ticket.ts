@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 /**
  * Generated class for the ReviewTicketPage page.
@@ -15,7 +17,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ReviewTicketPage {
   ticketFoods = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  ticket;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth, public fdatabase: AngularFireDatabase) {
     this.ticketFoods = this.navParams.get('list');
     console.log("reviewFoods:",this.ticketFoods);
   }
@@ -24,7 +27,15 @@ export class ReviewTicketPage {
     console.log('ionViewDidLoad ReviewTicketPage');
   }
 
+  createTicket(){
+    var user = this.afAuth.auth.currentUser;
+    if(user){
+      console.log(user.uid);
+    }
+  }
+
   submitTicket(){
+    this.createTicket();
     this.navCtrl.popToRoot();
   }
 
