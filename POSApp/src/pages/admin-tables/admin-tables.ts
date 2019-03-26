@@ -77,6 +77,8 @@ export class AdminTablesPage {
         }
       });
         this.tableListSort();
+    }).catch(error =>{
+      console.log(error);
     });
     
   }

@@ -18,16 +18,16 @@ export class ChooseTablePage {
   tables = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
     console.log("here");
-    var table = {tableNumber: 1};
-    this.tables.push(table);
-    /*this.fdatabase.database.ref('Tables').once('value')
+    //var table = {tableNumber: 1};
+    //this.tables.push(table);
+    this.fdatabase.database.ref('Tables').once('value')
         .then(snapshot => {
           console.log("here2");
           snapshot.forEach(table => {
             console.log(table.val());
             this.tables.push(table.val());
           });
-        });*/
+        });
   }
   // POp to Root: this.navCtrl.popToRoot();
   ionViewDidLoad() {

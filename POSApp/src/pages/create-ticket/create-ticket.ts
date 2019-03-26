@@ -26,11 +26,12 @@ export class CreateTicketPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
     this.tableNumber = this.navParams.get('num');
     console.log('tableNum:',this.tableNumber);
-    var food = {name:"Cheeseburger", description: "Very Good", price: 7, isChecked: false};
+    /*var food = {name:"Cheeseburger", description: "Very Good", price: 7, isChecked: false};
     var food2 = {name:"f2", description: "Very Good", price: 7, isChecked: false};
     this.foodList.push(food);
     this.foodList.push(food2);
-    /*this.fdatabase.database.ref('Food').once('value')
+    */
+    this.fdatabase.database.ref('Food').once('value')
         .then(snapshot => {
           let foods = [];
           snapshot.forEach(food => {
@@ -42,7 +43,7 @@ export class CreateTicketPage {
           });
           this.foodList = foods;
           this.loadedFoodList = foods;
-        });*/
+        });
   }
 
   initializeItems(): void {
