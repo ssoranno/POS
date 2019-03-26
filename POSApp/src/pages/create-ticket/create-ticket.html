@@ -14,11 +14,23 @@
     <ion-searchbar placeholder = "Find food by name" (ionInput)="getFood($event)">
       </ion-searchbar>
     <ion-list inset>
-          <ion-item >
-              <h1>{{food.name}}</h1>
-              <h2>Description: {{food.description}}</h2>
-              <h2>Price: {{food.price}}</h2>
+          <ion-item *ngFor="let food of foodList">
+              <ion-label>
+                  <h1>{{food.name}}</h1>
+                  <h2>Description: {{food.description}}</h2>
+                  <h2>Price: {{food.price}}</h2>
+              </ion-label>
+              <ion-checkbox slot="end" [(ngModel)]="food.isChecked" (click)="foodClicked(food.name)"></ion-checkbox>
         </ion-item>
         
       </ion-list>
 </ion-content>
+
+<ion-footer [ngSwitch]="add">
+  <div *ngSwitchCase="false">
+  <button ion-item color="primary" (click)="reviewTicket()" >Review Ticket</button>
+  </div>
+  <div *ngSwitchCase="true">
+      <button ion-item color="primary" (click)="addToTicket()" >Add</button>
+  </div>
+</ion-footer>

@@ -35,7 +35,7 @@ export class ChooseTablePage {
   }
 
   openTable(tableNum){
-    this.navCtrl.push('CreateTicketPage');
+    this.navCtrl.push('CreateTicketPage', {num:tableNum});
   }
 
 }
