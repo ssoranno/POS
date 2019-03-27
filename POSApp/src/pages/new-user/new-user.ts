@@ -39,6 +39,7 @@ export class NewUserPage {
       console.log(result.user.uid);
       this.userInfo.name = this.account.name;
       this.userInfo.Role = this.account.role;
+      this.userInfo.Role = +this.userInfo.Role;
       this.fdatabase.database.ref('/Users/'+result.user.uid).set(this.userInfo);
       this.navCtrl.pop();
       //this.signedup = "Signed up!";

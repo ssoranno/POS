@@ -38,7 +38,8 @@ export class CreateTicketPage {
             var f = {name: "",description: "", price: 0, isChecked:false};
             f.name = food.val().name;
             f.description = food.val().description;
-            f.price = food.val().price;
+            f.price = Number(food.val().price);
+            console.log(typeof f.price);
             foods.push(f);
           });
           this.foodList = foods;
@@ -84,7 +85,7 @@ export class CreateTicketPage {
   reviewTicket(){
     console.log("reviewButton");
     //console.log("foodList:",this.foodList[0].isChecked);
-    this.navCtrl.push('ReviewTicketPage', {list:this.ticketFoods});
+    this.navCtrl.push('ReviewTicketPage', {list:this.ticketFoods, tabNum:this.tableNumber});
   }
 
   checked(){

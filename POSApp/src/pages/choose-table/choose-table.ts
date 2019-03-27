@@ -27,6 +27,16 @@ export class ChooseTablePage {
             console.log(table.val());
             this.tables.push(table.val());
           });
+        }).then(sort=>{
+          this.tables.sort((obj1,obj2)=>{
+            if(obj1.tableNumber > obj2.tableNumber){
+              return 1;
+            }
+            if(obj1.tableNumber < obj2.tableNumber){
+              return -1;
+            }
+            return 0;
+          });
         });
   }
   // POp to Root: this.navCtrl.popToRoot();

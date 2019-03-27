@@ -19,7 +19,7 @@ export class AddFoodPage {
     name: "",
     description: "",
     type: 0,
-    price: 0
+    price: 0,
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
@@ -30,7 +30,7 @@ export class AddFoodPage {
   }
 
   registerFood(){
-    //console.log(this.food.type);
+    this.food.price = Number(this.food.price);
     this.fdatabase.database.ref('Food').push(this.food);
     this.navCtrl.pop();
   }
