@@ -24,10 +24,10 @@ export class NewUserPage {
     role: 0
   };
 
-  /*userInfo: { name:string, Role:number } = {
+  userInfo: { name:string, Role:number } = {
     name: '',
-    Role: 1
-  };*/
+    Role: 0
+  };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase, private afAuth: AngularFireAuth) {
   }
@@ -37,11 +37,10 @@ export class NewUserPage {
     try {
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(this.account.email,this.account.password);
       console.log(result.user.uid);
-      //this.userInfo.name = this.account.name;
-      this.fdatabase.database.ref('/Users/'+result.user.uid).set({
-        name: this.account.name,
-        Role: this.account.role
-      });
+      this.userInfo.name = this.account.name;
+      this.userInfo.Role = this.account.role;
+      this.userInfo.Role = +this.userInfo.Role;
+      this.fdatabase.database.ref('/Users/'+result.user.uid).set(this.userInfo);
       this.navCtrl.pop();
       //this.signedup = "Signed up!";
     } catch (e){

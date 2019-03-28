@@ -34,7 +34,7 @@ export class LoginPage {
         //console.log(result.user.uid)
         this.fdatabase.database.ref('Users/'+result.user.uid).once('value')
         .then(snapshot => {
-          this.Role = snapshot.val().Role;
+          this.Role = Number(snapshot.val().Role);
           console.log(this.Role);
           if(this.Role == 1){
             this.navCtrl.setRoot('AdminPage');

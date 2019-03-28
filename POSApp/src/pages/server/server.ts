@@ -25,7 +25,7 @@ export class ServerPage {
   }
 
   newTicket(){
-    this.navCtrl.push('OpenTicketPage');
+    this.navCtrl.push('ChooseTablePage');
   }
 
   logout() {

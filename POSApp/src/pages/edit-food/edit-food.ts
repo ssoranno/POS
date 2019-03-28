@@ -42,6 +42,7 @@ export class EditFoodPage {
 
   changeFood(){
     console.log(this.food);
+    this.food.price = Number(this.food.price);
     this.fdatabase.database.ref('Food/'+this.id).set(this.food);
     this.navCtrl.pop();
   }
