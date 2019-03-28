@@ -87,4 +87,9 @@ export class AdminTablesPage {
       return 0;
     });
   }
+
+  assignEmployee(emp: string, tableNum:string){
+      console.log(emp);
+      console.log(tableNum);
+  }
 }
