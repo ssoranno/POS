@@ -11,14 +11,24 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-list inset>
-        <ion-item *ngFor="let food of ticketFoods">
-            
-          <h1>{{food.name}}</h1>
+  <ion-list>
+    <ion-item-sliding *ngFor="let food of ticketFoods">
+        <ion-item>
+            <h1>{{food.name}}</h1>
           <h2>Description: {{food.description}}</h2>
           <h2>Price: {{food.price}}</h2>
       </ion-item>
-    </ion-list>
+      <ion-item-options side="right">
+           
+          <button ion-button color="danger" (click)="deleteFood(food.name)">
+            <ion-icon name="trash"></ion-icon>
+            Clear
+          </button>
+    
+          
+        </ion-item-options>
+      </ion-item-sliding>
+      </ion-list>
 </ion-content>
 
 <ion-footer>

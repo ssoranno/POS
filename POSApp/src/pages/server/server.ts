@@ -28,6 +28,10 @@ export class ServerPage {
     this.navCtrl.push('ChooseTablePage');
   }
 
+  getTickets(){
+    this.navCtrl.push('TicketListPage');
+  }
+
   logout() {
     this.afAuth.auth.signOut().then(func => {
       this.navCtrl.setRoot(WelcomePage);
