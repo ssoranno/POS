@@ -24,7 +24,9 @@ export class TicketListPage {
     this.fdatabase.database.ref('Tickets/'+this.uid).once('value').then(snapshot => {
       let tickets = [];
       snapshot.forEach(ticket => {
-        tickets.push(ticket);
+        if(ticket.child('isOpen').val() == true){
+          tickets.push(ticket);
+        }
       });
       this.ticketList = tickets;
     });
@@ -37,7 +39,7 @@ export class TicketListPage {
 
   payTicket(ticketId){
     console.log(ticketId);
-    this.navCtrl.push('PayReviewPage', {id:ticketId});
+    this.navCtrl.push('PayReviewPage', {tid:ticketId});
   }
 
   clearTicket(ticketId){

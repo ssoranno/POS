@@ -71,7 +71,8 @@ export class ReviewTicketPage {
       var id = this.fdatabase.database.ref('Tickets/'+this.uid).push({
         Date: new Date().toLocaleDateString(),
         OrderTotal: this.orderTotal,
-        TableNumber: this.tableNumber
+        TableNumber: this.tableNumber,
+        isOpen: true
       });
 
       console.log("foodid:",id.key);
