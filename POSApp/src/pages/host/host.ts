@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase} from '@angular/fire/database';
 import { AddTablePage} from '../add-table/add-table';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { WelcomePage } from '../welcome/welcome';
 
 import{ TableItem } from '../../models/table-item/table-item.interface';
 /**
@@ -20,7 +22,7 @@ export class HostPage {
 
 	tableList: Array <TableItem> =[];  
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-  	private fdatabase: AngularFireDatabase) {
+  	private fdatabase: AngularFireDatabase, private afAuth: AngularFireAuth) {
   	
   }
   
@@ -78,6 +80,15 @@ export class HostPage {
         return true;
       }
     }
+
+    logout() {
+    this.afAuth.auth.signOut().then(func => {
+      this.navCtrl.setRoot(WelcomePage);
+      //this.navCtrl.pop();
+    }).catch(error => {
+      console.log(error);
+    });
+  }
 
 
 }
