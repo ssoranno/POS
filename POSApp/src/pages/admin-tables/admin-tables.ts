@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase} from '@angular/fire/database';
 import { AddTablePage} from '../add-table/add-table';
 import{ TableItem } from '../../models/table-item/table-item.interface';
+import{ EmployeeItem } from '../../models/employee-item/employee-item.interface';
 
 /*
  * Generated class for the AdminTablesPage page.
@@ -19,19 +20,32 @@ import{ TableItem } from '../../models/table-item/table-item.interface';
 export class AdminTablesPage {
 
   tableList: Array <TableItem> =[];  
+  empList: Array <EmployeeItem>=[];
   constructor(public navCtrl: NavController, public navParams: NavParams, 
   	private fdatabase: AngularFireDatabase) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminTablesPage');
+    var i =0;
     this.refreshTableList();
+    this.fdatabase.database.ref('Users').once('value').then(snapshot =>{
+      snapshot.forEach(itemSnap=>{
+        if (itemSnap.val().Role == "2")
+        {
+          this.empList.push(itemSnap.val());
+          this.empList[i].uid = itemSnap.key;
+          i++;
+        }
+      });
+    });
+    
   }
 
   ionViewDidEnter(){
     console.log('ionViewDidEnter AdminTablesPage');
     this.refreshTableList();
-    
+ 
   }
 
 
@@ -93,5 +107,6 @@ export class AdminTablesPage {
   assignEmployee(emp: string, tableNum:string){
       console.log(emp);
       console.log(tableNum);
+
   }
 }

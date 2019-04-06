@@ -41,9 +41,8 @@
       <ion-label> 
         <h1>Table Number: {{item.tableNumber}}</h1>
       </ion-label>
-      <ion-select [(ngModel)]="emp" selectedText={{item.tableNumber}} (ngModelChange)="assignEmployee(emp, item?.tableNumber)" >
-        <ion-option [value]="1"> Employee 1</ion-option>
-        <ion-option [value]="2"> Employee 2</ion-option>
+      <ion-select [(ngModel)]="emp" selectedText=" " (ngModelChange)="assignEmployee(emp, item?.tableNumber)" >
+        <ion-option *ngFor= "let choice of empList" [value]="choice.uid"> {{choice.name}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
