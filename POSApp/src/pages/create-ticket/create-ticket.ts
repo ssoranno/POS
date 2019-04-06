@@ -22,10 +22,12 @@ export class CreateTicketPage {
   tableNumber;
   add = false;
   ticketFoods = [];
+  ticketID;
   //foodChecked;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
     this.tableNumber = this.navParams.get('num');
-    console.log('tableNum:',this.tableNumber);
+    this.ticketID = this.navParams.get('tid')|| null;
+    console.log('tableNum:',this.ticketID);
     /*var food = {name:"Cheeseburger", description: "Very Good", price: 7, isChecked: false};
     var food2 = {name:"f2", description: "Very Good", price: 7, isChecked: false};
     this.foodList.push(food);
@@ -47,6 +49,11 @@ export class CreateTicketPage {
         });
   }
 
+  ionViewWillEnter(){
+    this.ticketFoods = this.navParams.get('ticketFoods')|| [];
+    //console.log(this.navParams.get('ticketFoods'));
+  }
+
   initializeItems(): void {
     this.foodList = this.loadedFoodList;
   }
@@ -66,15 +73,6 @@ export class CreateTicketPage {
         return false;
       }
     });
-    /*let newList = [];
-    this.foodList.forEach(food=>{
-      if(food.name && q){
-        if(v.name.toLocaleLowerCase().indexOf(q.toLowerCase())>-1){
-          newList
-        }
-        return false;
-      }
-    });*/
     console.log(q);
   }
 
@@ -85,7 +83,7 @@ export class CreateTicketPage {
   reviewTicket(){
     console.log("reviewButton");
     //console.log("foodList:",this.foodList[0].isChecked);
-    this.navCtrl.push('ReviewTicketPage', {list:this.ticketFoods, tabNum:this.tableNumber});
+    this.navCtrl.push('ReviewTicketPage', {list:this.ticketFoods, tabNum:this.tableNumber, tid:this.ticketID});
   }
 
   checked(){

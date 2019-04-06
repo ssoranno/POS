@@ -14,6 +14,8 @@ import { HostPage } from '../pages/host/host';
 import { WaitListPage} from '../pages/wait-list/wait-list';
 import { AddWaitListPage } from '../pages/add-wait-list/add-wait-list';
 import { SMS } from '@ionic-native/sms';
+import { Stripe } from '@ionic-native/stripe';
+import { CardIO } from '@ionic-native/card-io';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDNTuztJ68PGwBCFGVtYae2Uwg7kQjCwH0",
@@ -51,6 +53,8 @@ export const firebaseConfig = {
     AddWaitListPage
   ],
   providers: [
+    Stripe,
+    CardIO,
     StatusBar,
     SplashScreen,
     SMS,
