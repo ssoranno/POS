@@ -23,7 +23,7 @@ export class AdminPage {
 
   employees() {
     console.log("Employee");
-    this.navCtrl.push('EmployeeRegisterPage');
+    this.navCtrl.push('AdminEmployeePage');
   }
 
   menu() {
