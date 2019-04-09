@@ -71,7 +71,7 @@ export class AdminEmployeePage {
 
   getEmployee(searchbar){
     this.initializeItems();
-    console.log(this.tempList);
+    //console.log(this.tempList);
     var q = searchbar.srcElement.value;
     if (!q) {
       return;
@@ -86,7 +86,7 @@ export class AdminEmployeePage {
 	      }
 	    });
 	}
-    console.log(q);
+    //console.log(q);
   }
 
   presentActionSheet(e: string){
