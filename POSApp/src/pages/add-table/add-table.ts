@@ -31,7 +31,8 @@ export class AddTablePage {
   	console.log(tableItem);
   	this.fdatabase.database.ref('Tables').push({
   		tableNumber: Number(this.tableItem.tableNumber),
-  		tableStatus: "Empty"
+  		tableStatus: "Empty",
+      server: " "
   	});
   	this.tableItem = {} as TableItem;
 

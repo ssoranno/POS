@@ -13,18 +13,27 @@
 <ion-content padding>
 
 	<ion-item>
-		<ion-label foating>Name</ion-label>
-		<ion-input type="text" [(ngModel)] = "waitListItem.personName"></ion-input>
+		<ion-input type="text" placeholder="Name" [(ngModel)] = "waitListItem.personName"></ion-input>
 	</ion-item>
 
 	<ion-item>
-		<ion-label foating>Size</ion-label>
-		<ion-input type="number" [(ngModel)] = "waitListItem.partySize"></ion-input>
+		<ion-input type="number" placeholder="Size" [(ngModel)] = "waitListItem.partySize"></ion-input>
 	</ion-item>
 
 	<ion-item>
-		<ion-label foating>Phone Number</ion-label>
-		<ion-input type="text" [(ngModel)] = "waitListItem.phoneNum"></ion-input>
+		<ion-input type="text" placeholder="Phone Number" [(ngModel)] = "waitListItem.phoneNum"></ion-input>
+	</ion-item>
+
+	<ion-item>
+		<ion-label>
+			Carrier
+		</ion-label>
+		<ion-select [(ngModel)]="waitListItem.carrier">
+			<ion-option value="Verizon">Verizon</ion-option>
+			<ion-option value="ATT">ATT</ion-option>
+			<ion-option value="Sprint">Sprint</ion-option>
+			<ion-option value="TMobile">TMobile</ion-option>
+		</ion-select>
 	</ion-item>
 
 	<button ion-button block (click)= addItem(waitListItem)>Add to Wait List</button>

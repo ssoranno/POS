@@ -13,6 +13,7 @@ import { AddTablePage } from '../pages/add-table/add-table';
 import { HostPage } from '../pages/host/host';
 import { WaitListPage} from '../pages/wait-list/wait-list';
 import { AddWaitListPage } from '../pages/add-wait-list/add-wait-list';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 import { SMS } from '@ionic-native/sms';
 import { Stripe } from '@ionic-native/stripe';
 import { CardIO } from '@ionic-native/card-io';
@@ -57,6 +58,7 @@ export const firebaseConfig = {
     CardIO,
     StatusBar,
     SplashScreen,
+    EmailComposer,
     SMS,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

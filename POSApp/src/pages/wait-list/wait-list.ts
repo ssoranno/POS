@@ -5,6 +5,7 @@ import { AngularFireDatabase} from '@angular/fire/database';
 import { WaitListItem } from '../../models/wait-list-item/wait-list-item.interface';
 import { AddWaitListPage } from '../add-wait-list/add-wait-list';
 import { SMS } from '@ionic-native/sms';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 /**
  * Generated class for the WaitListPage page.
@@ -22,7 +23,7 @@ export class WaitListPage {
 
   waitList: Array <WaitListItem> =[];
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-  	private fdatabase: AngularFireDatabase, private sms: SMS) {
+  	private fdatabase: AngularFireDatabase, private sms: SMS, private ec : EmailComposer) {
   }
 
   ionViewDidLoad() 
@@ -60,9 +61,24 @@ clearWaitListItem(phoneNum: string)
     }
 }
 
-alertWaiting(phoneNum: string)
+alertWaiting(phoneNum: string, carrier: string)
 {
   this.sms.send(phoneNum, 'Your table is ready. Please arrive in 5 minutes.' );
+
+//   var addr ="";
+//   if (carrier == "Verizon")
+//   {
+//       addr = phoneNum+'@vtext.com';
+//   }
+
+// let email = {
+//   to: addr,
+//   body: 'How are you? Nice greetings from Leipzig',
+//   isHtml: false
+// }
+
+// // Send a text message using default options
+//   this.ec.open(email);
 }
 
 refreshWaitList()

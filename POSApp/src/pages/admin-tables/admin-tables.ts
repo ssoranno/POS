@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChildren, QueryList} from '@angular/core';
+import { IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { AngularFireDatabase} from '@angular/fire/database';
 import { AddTablePage} from '../add-table/add-table';
 import{ TableItem } from '../../models/table-item/table-item.interface';
 import{ EmployeeItem } from '../../models/employee-item/employee-item.interface';
+
 
 /*
  * Generated class for the AdminTablesPage page.
@@ -18,6 +19,7 @@ import{ EmployeeItem } from '../../models/employee-item/employee-item.interface'
   templateUrl: 'admin-tables.html',
 })
 export class AdminTablesPage {
+  @ViewChildren(Select) selectGroup: QueryList<Select>;
 
   tableList: Array <TableItem> =[];  
   empList: Array <EmployeeItem>=[];
@@ -39,7 +41,7 @@ export class AdminTablesPage {
         }
       });
     });
-    
+
   }
 
   ionViewDidEnter(){
@@ -89,8 +91,8 @@ export class AdminTablesPage {
         {
           this.tableList.push(itemSnap.val());
         }
-      });
-        this.tableListSort();
+      });  
+      this.tableListSort();
     }).catch(error =>{
       console.log(error);
     });
@@ -102,11 +104,42 @@ export class AdminTablesPage {
       if (leftSide.tableNumber>rightSide.tableNumber) return 1;
       return 0;
     });
+     this.updateNames();
   }
 
   assignEmployee(emp: string, tableNum:string){
       console.log(emp);
       console.log(tableNum);
-
+      this.fdatabase.database.ref('Tables').orderByChild('tableNumber').equalTo(tableNum).once("child_added" , snapshot =>
+    {
+      snapshot.ref.update({ server: emp})
+    });
+ 
+      for(let j in this.empList)
+      {
+        if(this.empList[j].uid == emp)
+        {
+          this.tableList[Number(tableNum)-1].server=this.empList[j].name;
+        }
+      }
   }
+
+  updateNames()
+    {
+      for (let i in this.tableList){
+          for(let j in this.empList)
+          {
+            if(this.tableList[i].server == this.empList[j].uid)
+            {
+              this.tableList[i].server=this.empList[j].name;
+            }
+          }
+        }
+      }
+    
+
+  // openSelect(ind: number) {
+  //   var select = this.selectGroup.find(sel => sel.id === 'select-'+ind+'-0');
+  //   select.open(); 
+  // }
 }
