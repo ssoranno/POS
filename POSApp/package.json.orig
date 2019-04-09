@@ -30,6 +30,8 @@
     "@ionic-native/stripe": "^4.20.0",
     "@ionic/storage": "2.2.0",
     "angularfire2": "^5.1.1",
+    "card.io.cordova.mobilesdk": "2.1.0",
+    "cordova-plugin-stripe": "1.5.3",
     "cordova-plugin-email-composer": "0.9.2",
     "cordova-plugin-stripe": "1.5.3",
     "cordova-sms-plugin": "1.0.0",
@@ -49,9 +51,16 @@
   "cordova": {
     "plugins": {
       "cordova-sms-plugin": {},
+<<<<<<< HEAD
+      "card.io.cordova.mobilesdk": {},
+      "cordova-plugin-stripe": {}
+      "cordova-sms-plugin": {},
+      "cordova-plugin-email-composer": {}
+=======
       "cordova-plugin-email-composer": {},
       "card.io.cordova.mobilesdk": {},
       "cordova-plugin-stripe": {}
+>>>>>>> workWithoutCard
     }
   }
 }
