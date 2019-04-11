@@ -19,7 +19,7 @@
   <ion-searchbar placeholder = "Find Employee by name" (ionInput)="getEmployee($event)">
   </ion-searchbar>
 	<ion-list>
-		<button ion-item *ngFor= "let item of tempList" (click)="presentActionSheet(item.name)">
+		<button ion-item *ngFor= "let item of tempList" (click)="presentActionSheet(item.name)" >
       {{item.name}}
 		</button>
 	</ion-list>

@@ -92,6 +92,7 @@ export class AdminTablesPage {
           this.tableList.push(itemSnap.val());
         }
       });  
+      this.updateNames();
       this.tableListSort();
     }).catch(error =>{
       console.log(error);
@@ -104,7 +105,7 @@ export class AdminTablesPage {
       if (leftSide.tableNumber>rightSide.tableNumber) return 1;
       return 0;
     });
-     this.updateNames();
+     
   }
 
   assignEmployee(emp: string, tableNum:string){
