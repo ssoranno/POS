@@ -5,7 +5,7 @@ import { AngularFireDatabase} from '@angular/fire/database';
 import { WaitListItem } from '../../models/wait-list-item/wait-list-item.interface';
 import { AddWaitListPage } from '../add-wait-list/add-wait-list';
 import { SMS } from '@ionic-native/sms';
-import { EmailComposer } from '@ionic-native/email-composer/ngx';
+
 
 /**
  * Generated class for the WaitListPage page.
