@@ -23,7 +23,7 @@ export class WaitListPage {
 
   waitList: Array <WaitListItem> =[];
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-  	private fdatabase: AngularFireDatabase, private sms: SMS, private ec : EmailComposer) {
+  	private fdatabase: AngularFireDatabase, private sms: SMS) {
   }
 
   ionViewDidLoad() 
