@@ -54,7 +54,7 @@
           <h1 style="color:black;">Table: {{item.tableNumber}} </h1>
           <h2 style="color:black;"> {{item.server}}</h2>
         </ion-label>
-        <ion-select [id]="'select'+i" selectedText= " ">
+        <ion-select [id]="'select'+i" selectedText= " " cancelText =" ">
           <ion-option *ngFor= "let choice of empList"  (ionSelect)= "assignEmployee(choice.uid, item?.tableNumber)"> {{choice.name}}</ion-option>
         </ion-select>
       </ion-item>

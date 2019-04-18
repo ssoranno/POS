@@ -28,10 +28,10 @@ export class ChooseTablePage {
         .then(snapshot => {
           console.log("here2");
           snapshot.forEach(table => {
+            console.log(table.val());
             if(table.val().server == this.uid){
-              console.log(table.val());
-              this.tables.push(table.val());
-            }
+            this.tables.push(table.val());
+          }
           });
         }).then(sort=>{
           this.tables.sort((obj1,obj2)=>{
