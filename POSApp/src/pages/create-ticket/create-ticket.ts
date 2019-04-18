@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { checkAndUpdateDirectiveDynamic } from '@angular/core/src/view/provider';
 import { v } from '@angular/core/src/render3';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 /**
  * Generated class for the CreateTicketPage page.
@@ -23,16 +24,34 @@ export class CreateTicketPage {
   add = false;
   ticketFoods = [];
   ticketID;
+  uid;
   //foodChecked;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
-    this.tableNumber = this.navParams.get('num');
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase, private afAuth: AngularFireAuth) {
+    this.tableNumber = this.navParams.get('num') || null;
     this.ticketID = this.navParams.get('tid')|| null;
-    console.log('tableNum:',this.ticketID);
+    var user = this.afAuth.auth.currentUser;
+    this.uid = user.uid;
     /*var food = {name:"Cheeseburger", description: "Very Good", price: 7, isChecked: false};
     var food2 = {name:"f2", description: "Very Good", price: 7, isChecked: false};
     this.foodList.push(food);
     this.foodList.push(food2);
     */
+    
+  }
+
+
+
+  ionViewWillEnter(){
+    this.ticketFoods = this.navParams.get('ticketFoods')|| [];
+    //console.log(this.navParams.get('ticketFoods'));
+  }
+
+  initializeItems(): void {
+    this.foodList = this.loadedFoodList;
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CreateTicketPage');
     this.fdatabase.database.ref('Food').once('value')
         .then(snapshot => {
           let foods = [];
@@ -47,15 +66,6 @@ export class CreateTicketPage {
           this.foodList = foods;
           this.loadedFoodList = foods;
         });
-  }
-
-  ionViewWillEnter(){
-    this.ticketFoods = this.navParams.get('ticketFoods')|| [];
-    //console.log(this.navParams.get('ticketFoods'));
-  }
-
-  initializeItems(): void {
-    this.foodList = this.loadedFoodList;
   }
 
   getFood(searchbar){
@@ -76,9 +86,7 @@ export class CreateTicketPage {
     console.log(q);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateTicketPage');
-  }
+
 
   reviewTicket(){
     console.log("reviewButton");
@@ -109,11 +117,31 @@ export class CreateTicketPage {
   addToTicket(){
     this.foodList.forEach(food=>{
       if(food.isChecked == true){
-        this.ticketFoods.push(food);
+        if (this.ticketID == null)
+        {
+          var id = this.fdatabase.database.ref('Tickets/'+this.uid).push({
+            Date: new Date().toLocaleDateString(),
+            OrderTotal: 0,
+            TableNumber: this.tableNumber,
+            isOpen: true
+          });
+          this.ticketID = id.key;
+        }
+        var foodid = "";
+        this.fdatabase.database.ref('Food').orderByChild('name').equalTo(food.name)
+        .once("child_added" , snapshot => {
+        foodid = snapshot.key;
+        
+        this.fdatabase.database.ref('Tickets/'+this.uid+'/'+this.ticketID+'/FoodIDs').push({
+         id:foodid
+        });
+      });
         food.isChecked = false;
       }
     });
     this.add = false;
+
+    this.navCtrl.push('ReviewTicketPage', {tid:this.ticketID});
   }
 
 }
