@@ -85,7 +85,7 @@
     <plugin name="cordova-sms-plugin" spec="1.0.0" />
     <plugin name="cordova-plugin-stripe" spec="1.5.3" />
     <plugin name="card.io.cordova.mobilesdk" spec="2.1.0" />
-    <plugin name="cordova-plugin-email-composer" spec="0.9.2" />
     <plugin name="card.io.cordova.mobilesdk" spec="~2.1.0" />
     <plugin name="cordova-plugin-stripe" spec="1.5.3" />
+    <plugin name="cordova-plugin-email-composer" spec="0.9.2" />
 </widget>

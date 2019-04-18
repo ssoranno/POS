@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Tab } from 'ionic-angular';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 /**
  * Generated class for the ChooseTablePage page.
@@ -16,16 +17,21 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class ChooseTablePage {
   tables = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase) {
+  uid;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fdatabase: AngularFireDatabase, private afAuth: AngularFireAuth) {
     console.log("here");
+    var user = this.afAuth.auth.currentUser;
+    this.uid = user.uid;
     //var table = {tableNumber: 1};
     //this.tables.push(table);
     this.fdatabase.database.ref('Tables').once('value')
         .then(snapshot => {
           console.log("here2");
           snapshot.forEach(table => {
-            console.log(table.val());
-            this.tables.push(table.val());
+            if(table.val().server == this.uid){
+              console.log(table.val());
+              this.tables.push(table.val());
+            }
           });
         }).then(sort=>{
           this.tables.sort((obj1,obj2)=>{
