@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { WelcomePage } from '../welcome/welcome';
+import { AngularFireDatabase} from '@angular/fire/database';
+
+
 
 /**
  * Generated class for the ServerPage page.
@@ -17,11 +20,36 @@ import { WelcomePage } from '../welcome/welcome';
 })
 export class ServerPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth) {
+  ticketList = [];
+  uid;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth,
+    private fdatabase: AngularFireDatabase) {
+
+     var user = this.afAuth.auth.currentUser;
+     console.log(this.afAuth.auth.currentUser);
+    this.uid = user.uid;
+
+  }
+
+  refreshTickets(){
+    this.fdatabase.database.ref('Tickets/'+this.uid).once('value').then(snapshot => {
+      let tickets = [];
+      snapshot.forEach(ticket => {
+        if(ticket.child('isOpen').val() == true){
+          tickets.push(ticket);
+        }
+      });
+      this.ticketList = tickets;
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ServerPage');
+  }
+
+  ionViewDidEnter(){
+    this.refreshTickets();
   }
 
   newTicket(){
@@ -30,6 +58,11 @@ export class ServerPage {
 
   getTickets(){
     this.navCtrl.push('TicketListPage');
+  }
+
+  reviewTicket(ticketId){
+    console.log(ticketId);
+    this.navCtrl.push('ReviewTicketPage', {tid:ticketId});
   }
 
   logout() {

@@ -7,6 +7,11 @@
 <ion-header>
   <ion-navbar>
     <ion-title>reviewTicket</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="navigateToCreateTicketPage()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -20,7 +25,7 @@
       </ion-item>
       <ion-item-options side="right">
            
-          <button ion-button color="danger" (click)="deleteFood(food.name)">
+          <button ion-button color="danger" (click)="deleteFood(food.entryID)">
             <ion-icon name="trash"></ion-icon>
             Clear
           </button>
@@ -29,9 +34,20 @@
         </ion-item-options>
       </ion-item-sliding>
       </ion-list>
+      <ion-item>
+        <h1> Total: ${{orderTotal}}</h1>
+      </ion-item>
+
 </ion-content>
 
 <ion-footer>
-    <button ion-item color="primary" (click)="submitTicket()">Send To Kitchen</button>
-  </ion-footer>
+  <ion-row>
+    <ion-col>
+     <button ion-item color="primary" (click)="submitTicket()">Send To Kitchen</button>
+    </ion-col>
+    <ion-col>
+      <button ion-item color="secondary" (click)="payTicket()">Pay</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
   

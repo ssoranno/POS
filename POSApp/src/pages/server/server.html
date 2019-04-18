@@ -7,15 +7,30 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Server</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="newTicket()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div padding>
-    <button ion-button color="primary" block (click)="newTicket()" type="button">Open New Ticket</button>
-    <button ion-button color="primary" block (click)="getTickets()" type="button">View Existing Tickets</button>
-  </div>
 
-  <div><button ion-button color="secondary" block (click)="logout()" type="button">Logout</button></div>
+<ion-list>
+    <ion-card *ngFor="let item of ticketList" >
+      <ion-card-header>
+       
+       <button ion-item (click)="reviewTicket(item.key)" >
+        <h1> Table {{item.val().TableNumber}}</h1>
+        <h2>{{item.val().Date}}</h2>
+       </button>
+      </ion-card-header>
+    </ion-card>
+</ion-list>
+
+  <ion-footer>
+    <button ion-button color="secondary" block (click)="logout()" type="button">Logout</button>
+  </ion-footer>
 </ion-content>
 
