@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  The world is your oyster.
+  <ion-list *ngFor="let obj of foodAndTable">
+    <ion-item >
+      <h1>{{obj.tableNum}}</h1>
+    </ion-item>
+  </ion-list>
+</ion-content>
