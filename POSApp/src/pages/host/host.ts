@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { AngularFireDatabase} from '@angular/fire/database';
 import { AddTablePage} from '../add-table/add-table';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -22,7 +22,7 @@ export class HostPage {
 
 	tableList: Array <TableItem> =[];  
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-  	private fdatabase: AngularFireDatabase, private afAuth: AngularFireAuth) {
+  	private fdatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private app:App) {
   	
   }
   
@@ -83,8 +83,7 @@ export class HostPage {
 
     logout() {
     this.afAuth.auth.signOut().then(func => {
-      this.navCtrl.setRoot(WelcomePage);
-      //this.navCtrl.pop();
+      this.app.getRootNav().setRoot(WelcomePage);
     }).catch(error => {
       console.log(error);
     });
