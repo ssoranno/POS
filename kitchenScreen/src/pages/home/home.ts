@@ -9,7 +9,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class HomePage {
 
-  foodAndTable = [];
+  //foodAndTable = [];
   uid;
   constructor(public navCtrl: NavController, private afAuth: AngularFireAuth, public fdatabase: AngularFireDatabase) {
     this.login();
