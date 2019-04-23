@@ -6,19 +6,29 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>submitPayment</ion-title>
+    <ion-title>Submit Payment</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
     <div>
-      <h1>Total Payment: {{orderTotal}}</h1>
+      <h1>Total Payment: ${{orderTotal}}</h1>
     </div>
-    <ion-input [(ngModel)]="cardinfo.number" placeholder="card number"></ion-input>
-    <ion-input [(ngModel)]="cardinfo.expMonth" placeholder="card experation month"></ion-input>
-    <ion-input [(ngModel)]="cardinfo.expYear" placeholder="card experation year"></ion-input>
-    <ion-input [(ngModel)]="cardinfo.cvc" placeholder="card cvc"></ion-input>
-    <button ion-button (click)="readCard()">Read Card</button>
+    <ion-item>
+      <ion-input [(ngModel)]="cardinfo.number" placeholder="Card Number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input [(ngModel)]="cardinfo.expMonth" placeholder="Card Expiration Month"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input [(ngModel)]="cardinfo.expYear" placeholder="Card Expiration Year"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input [(ngModel)]="cardinfo.cvc" placeholder="Card CVC"></ion-input>
+  </ion-item>
+    <button ion-button outline icon (click)="readCard()">Read Card 
+    <ion-icon name="card"></ion-icon>
+  </button>
 </ion-content>
 
 <ion-footer>

@@ -30,7 +30,6 @@ export class AdminTablesPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminTablesPage');
     var i =0;
-    this.refreshTableList();
     this.fdatabase.database.ref('Users').once('value').then(snapshot =>{
       snapshot.forEach(itemSnap=>{
         if (itemSnap.val().Role == "2")
@@ -41,6 +40,7 @@ export class AdminTablesPage {
         }
       });
     });
+    this.refreshTableList();
 
   }
 
@@ -89,10 +89,23 @@ export class AdminTablesPage {
         }
         if (found==false)
         {
-          this.tableList.push(itemSnap.val());
+          var tName="";
+          for(let j in this.empList)
+          {
+            if(itemSnap.val().server == this.empList[j].uid)
+            {
+              tName = this.empList[j].name;
+            }
+          }
+          var temp: TableItem={
+          tableNumber: itemSnap.val().tableNumber,
+          tableStatus: itemSnap.val().tableStatus,
+          server: tName};
+          
+
+          this.tableList.push(temp);
         }
       });  
-      this.updateNames();
       this.tableListSort();
     }).catch(error =>{
       console.log(error);
@@ -125,22 +138,4 @@ export class AdminTablesPage {
       }
   }
 
-  updateNames()
-    {
-      for (let i in this.tableList){
-          for(let j in this.empList)
-          {
-            if(this.tableList[i].server == this.empList[j].uid)
-            {
-              this.tableList[i].server=this.empList[j].name;
-            }
-          }
-        }
-      }
-    
-
-  // openSelect(ind: number) {
-  //   var select = this.selectGroup.find(sel => sel.id === 'select-'+ind+'-0');
-  //   select.open(); 
-  // }
 }

@@ -74,4 +74,14 @@ export class ServerPage {
     });
   }
 
+  condition(tableStatus: string)
+    {
+      if (tableStatus == "Complete"){
+        return false;
+      }
+      else{
+        return true;
+      }
+    }
+
 }

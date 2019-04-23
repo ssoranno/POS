@@ -13,14 +13,30 @@
 <ion-content padding>
 
   <ion-item>
-    <h1>Table Number: {{tableNumber}}</h1>
-    <h1>Ticket Total: ${{OrderTotal}}</h1>
+    <h2 style="font-size:150%;"> {{date}}</h2>
+    <ion-row>
+      <ion-col>
+        <h2>Table Number: {{tableNumber}}</h2>
+      </ion-col>
+      <ion-col>
+        <h2> Server: {{user}}</h2>
+      </ion-col>
+    </ion-row>
   </ion-item>
-  <ion-list *ngFor=" let food of foodList">
-    <ion-item>
+  <ion-list >
+    <ion-item *ngFor=" let food of foodList">
+      <ion-row>
+        <ion-col>
         <h1>{{food.name}}</h1>
-        <h2>Price: {{food.price}}</h2>
+      </ion-col>
+      <ion-col>
+        <h1>${{food.price}}</h1>
+      </ion-col>
+      </ion-row>
     </ion-item>
+    <ion-item>
+    <h1 style="font-size:250%;">Total: ${{OrderTotal}}</h1>
+  </ion-item>
   </ion-list>
 
 </ion-content>

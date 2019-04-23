@@ -21,16 +21,18 @@ export class PayReviewPage {
   OrderTotal;
   tableNumber;
   uid;
+  date;
+  user;
   constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth, public fdatabase: AngularFireDatabase) {
     this.ticketID = this.navParams.get('tid');
     var user = this.afAuth.auth.currentUser;
     this.uid = user.uid;
-    //this.uid = this.navParams.get('uid');
     console.log(this.ticketID);
     console.log(this.uid);
     this.fdatabase.database.ref('Tickets/'+this.uid+'/'+this.ticketID).once('value').then(snapshot =>{
       this.OrderTotal = snapshot.val().OrderTotal;
       this.tableNumber = snapshot.val().TableNumber;
+      this.date=snapshot.val().Date;
       let foods = [];
       snapshot.child('FoodIDs').forEach(fid => {
         this.fdatabase.database.ref('Food/'+fid.val().id).once('value').then(foodInfo => {
@@ -39,6 +41,9 @@ export class PayReviewPage {
       });
       this.foodList = foods;
     });
+    this.fdatabase.database.ref('Users/'+this.uid).once('value').then(snapshot =>{
+      this.user=snapshot.val().name;
+    })
   }
 
   closeTicket(){

@@ -56,10 +56,11 @@ export class CreateTicketPage {
         .then(snapshot => {
           let foods = [];
           snapshot.forEach(food => {
-            var f = {name: "",description: "", price: 0, isChecked:false};
+            var f = {name: "",description: "", price: 0, isChecked:false, status:""};
             f.name = food.val().name;
             f.description = food.val().description;
             f.price = Number(food.val().price);
+            f.status= "Sent"
             console.log(typeof f.price);
             foods.push(f);
           });
@@ -123,7 +124,8 @@ export class CreateTicketPage {
             Date: new Date().toLocaleDateString(),
             OrderTotal: 0,
             TableNumber: this.tableNumber,
-            isOpen: true
+            isOpen: true,
+            status: "Sent"
           });
           this.ticketID = id.key;
         }
