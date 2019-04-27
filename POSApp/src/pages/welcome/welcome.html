@@ -8,6 +8,13 @@
   </div>
   <div padding>
     <!--<button ion-button block (click)="signup()">SIGNUP</button>-->
+
     <button ion-button color="primary" block (click)="login()" class="login">LOGIN</button>
+    <button ion-button color="primary" block (click)="cashBoxOpen()" class="login">Cash Box Open</button>
+    <button ion-button color="primary" block (click)="cashBoxClose()" class="login">Cash Box Close</button>
+    <ion-item>
+    <ion-label fixed>Server IP</ion-label>
+    <ion-input type="text" [(ngModel)]="ip" name="ip"></ion-input>
+    </ion-item>
   </div>
 </ion-content>

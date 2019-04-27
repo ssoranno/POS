@@ -17,6 +17,7 @@ import { AddWaitListPage } from '../pages/add-wait-list/add-wait-list';
 import { SMS } from '@ionic-native/sms';
 import { Stripe } from '@ionic-native/stripe';
 import { CardIO } from '@ionic-native/card-io';
+import { HttpClientModule } from '@angular/common/http';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDNTuztJ68PGwBCFGVtYae2Uwg7kQjCwH0",
@@ -39,6 +40,7 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,

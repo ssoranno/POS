@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { HttpClient } from '@angular/common/http';
 /**
  * Generated class for the WelcomePage page.
  *
@@ -14,8 +14,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'welcome.html',
 })
 export class WelcomePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  ip:string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient) {
   }
 
   login() {
@@ -24,6 +24,20 @@ export class WelcomePage {
 
   signup() {
     this.navCtrl.push('SignupPage');
+  }
+
+  cashBoxOpen(){
+    var url = "http://"+this.ip+"/open";
+
+    this.http.get(url).subscribe(data => {
+      console.log('my data: ', data);
+    });
+  }
+  cashBoxClose(){
+    var url = "http://"+this.ip+"/lock";
+    this.http.get(url).subscribe(data => {
+      console.log('my data: ', data);
+    });
   }
 
 }
