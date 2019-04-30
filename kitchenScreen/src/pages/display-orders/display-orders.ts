@@ -33,7 +33,7 @@ export class DisplayOrdersPage {
         //obj.uid = user.key;
         user.forEach(ticket =>{
           console.log(ticket.val());
-          if(ticket.val().isOpen == true){
+          if(ticket.val().isOpen == true && ticket.val().status !== "Complete"){
             var obj: {ticketID:string, tableNum:number, foodList:any, status:string, uid:string} = {tableNum: 0, foodList:[], ticketID:"", status:"", uid:""};
             obj.tableNum = ticket.val().TableNumber;
             obj.ticketID = ticket.key;
@@ -73,6 +73,9 @@ export class DisplayOrdersPage {
     console.log(food);
     this.fdatabase.database.ref("Tickets/"+food.uid+"/"+food.ticketID).update({
       status:"Complete"
+    }).then(refresh => {
+      this.foodAndTable = [];
+      this.loadTickets();
     });
     for (let i in this.foodAndTable)
     {
