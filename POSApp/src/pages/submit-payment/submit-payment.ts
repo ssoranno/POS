@@ -59,12 +59,13 @@ export class SubmitPaymentPage {
                 console.log("got here");
                 this.cardinfo.number = value.cardNumber;
                 console.log(value.cardNumber);
-              } 
-              this.cardinfo.expMonth = value.expiryMonth;
+                this.cardinfo.expMonth = value.expiryMonth;
               this.cardinfo.expYear = value.expiryYear;
               this.cardinfo.cvc = value.cvv;
+              } 
+              
             }
-          );
+          ).catch(Error);
         }
       }
     );

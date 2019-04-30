@@ -24,18 +24,6 @@
 		<ion-input type="text" placeholder="Phone Number" [(ngModel)] = "waitListItem.phoneNum"></ion-input>
 	</ion-item>
 
-	<ion-item>
-		<ion-label>
-			Carrier
-		</ion-label>
-		<ion-select [(ngModel)]="waitListItem.carrier">
-			<ion-option value="Verizon">Verizon</ion-option>
-			<ion-option value="ATT">ATT</ion-option>
-			<ion-option value="Sprint">Sprint</ion-option>
-			<ion-option value="TMobile">TMobile</ion-option>
-		</ion-select>
-	</ion-item>
-
 	<button ion-button block (click)= addItem(waitListItem)>Add to Wait List</button>
 
 </ion-content>

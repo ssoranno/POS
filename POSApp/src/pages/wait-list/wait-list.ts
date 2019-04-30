@@ -34,7 +34,7 @@ export class WaitListPage {
   }
 
    ionViewDidEnter(){
-    console.log('ionViewDidEnter AdminTablesPage');
+    console.log('ionViewDidEnter WaitList');
     this.refreshWaitList();
   }
 
@@ -45,58 +45,47 @@ navigateToAddWaitList()
 }
 
 
-clearWaitListItem(phoneNum: string)
+clearWaitListItem(id: string)
 {
-	this.fdatabase.database.ref('WaitList').orderByChild('phoneNum').equalTo(phoneNum).once("child_added" , snapshot =>
-	{
-	  snapshot.ref.remove();
-  });
-
+	var fref = this.fdatabase.database.ref('WaitList/'+ id);
+  fref.remove();
   for (let i in this.waitList)
     {
-       if (this.waitList[i].phoneNum == phoneNum)
+       if (this.waitList[i].id == id)
       {
         this.waitList.splice(Number(i), 1);
       }
     }
 }
 
-alertWaiting(phoneNum: string, carrier: string)
+alertWaiting(phoneNum: string)
 {
   this.sms.send(phoneNum, 'Your table is ready. Please arrive in 5 minutes.' );
 
-//   var addr ="";
-//   if (carrier == "Verizon")
-//   {
-//       addr = phoneNum+'@vtext.com';
-//   }
-
-// let email = {
-//   to: addr,
-//   body: 'How are you? Nice greetings from Leipzig',
-//   isHtml: false
-// }
-
-// // Send a text message using default options
-//   this.ec.open(email);
 }
 
 refreshWaitList()
 {
   this.fdatabase.database.ref('WaitList').once('value').then(snapshot =>{
     snapshot.forEach(itemSnap => {
-      var ind = itemSnap.val().phoneNum;
+      var ind = itemSnap.key;
       var found = false;
       for (var i =0; i<this.waitList.length; i++)
       {
-        if (this.waitList[i].phoneNum == ind)
+        if (this.waitList[i].id == ind)
         {
           found = true;
         }
       }
       if (found==false)
       {
-        this.waitList.push(itemSnap.val());
+        var temp : WaitListItem ={
+          personName: itemSnap.val().name,
+          partySize: itemSnap.val().partySize,
+          phoneNum: itemSnap.val().phoneNum,
+          id: itemSnap.key  
+        }
+        this.waitList.push(temp);
       }
     });
   });

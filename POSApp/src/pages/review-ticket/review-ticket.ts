@@ -164,6 +164,7 @@ export class ReviewTicketPage {
   
 
   submitTicket(){
+    this.fdatabase.database.ref('Tickets/'+this.uid+'/'+this.ticketID).update({status:"Sent"});
     this.navCtrl.popToRoot();
   }
 
