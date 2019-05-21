@@ -16,3 +16,5 @@ cd into the repository folder<br>
 run "ionic serve -c"<br>
 
 Link to project wiki: https://sites.google.com/udel.edu/pos/home
+
+Github Link: https://github.com/ssoranno/POS
