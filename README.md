@@ -6,7 +6,7 @@ The Kitchen Screen App source code for the Raspberry pi can be found in the kitc
 
 The cash box arduino code can be found in the cashBoxServer folder.
 
-The firebaseTesting Folder contain an ionic app that we used for testing firebase functions
+The firebaseAuth Folder contain an ionic app that we used for testing firebase functions
 
 ## To run ionic apps:
 install nodejs<br>
