@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+resources:
+- repo: self
+
 steps:
 - task: NodeTool@0
   inputs:
